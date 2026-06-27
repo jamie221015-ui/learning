@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#6D4C41" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="90天陪跑" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
+  <title>90天陪跑</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    html, body { height: 100%; overflow: hidden; }
+    body { font-family: 'PingFang TC', 'Noto Sans TC', 'Hiragino Sans GB', sans-serif; background: #F5EDE3; color: #3E2723; }
+    #app { display: flex; flex-direction: column; height: 100%; height: 100dvh; }
+
+    /* ── Header ── */
+    #header {
+      flex-shrink: 0;
+      padding: max(env(safe-area-inset-top, 0px) + 8px, 36px) 16px 16px;
+      background: #F5EDE3;
+      position: relative;
+      overflow: hidden;
+    }
+    .header-inner { display: flex; align-items: center; gap: 14px; position: relative; }
+    .mini-cal { background:#fff; border-radius:16px; box-shadow:0 4px 16px rgba(109,76,65,0.13), 0 1px 4px rgba(109,76,65,0.08); overflow:hidden; flex-shrink:0; width:68px; }
+    .mini-cal-top { background:#8D6E63; padding:5px 0 4px; text-align:center; font-size:11px; font-weight:800; color:#fff; letter-spacing:1px; }
+    .mini-cal-body { padding:6px 0 8px; text-align:center; }
+    .mini-cal-day-num { font-size:30px; font-weight:900; color:#3E2723; line-height:1; letter-spacing:-1px; }
+    .mini-cal-weekday { font-size:10px; color:#A1887F; font-weight:600; margin-top:2px; }
+    .header-right { flex:1; min-width:0; }
+    .header-right-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; }
+    .phase-badge { background:#8D6E63; border-radius:20px; padding:3px 11px; font-size:11px; font-weight:800; color:#fff; letter-spacing:0.5px; }
+    .day-counter { font-size:12px; color:#A1887F; font-weight:600; }
+    .energy-box { background:#fff; border-radius:14px; padding:9px 13px; box-shadow:0 2px 10px rgba(109,76,65,0.08); border-left:3px solid #C8A882; }
+    .energy-label { font-size:10px; font-weight:800; color:#C8A882; letter-spacing:0.8px; margin-bottom:3px; }
+    .energy-text { font-size:13px; font-weight:700; color:#5D4037; line-height:1.4; }
+    .progress-row { display:flex; align-items:center; gap:8px; margin-top:10px; }
+    .progress-wrap { flex:1; background:#E8D5C0; border-radius:10px; height:6px; overflow:hidden; }
+    .progress-bar { height:100%; background:linear-gradient(90deg,#A1887F,#C8A882); border-radius:10px; transition:width 1s ease; }
+    .progress-label { font-size:11px; color:#A1887F; font-weight:700; white-space:nowrap; }
+
+    /* ── 等級切換條 ── */
+    #levelStrip { flex-shrink:0; background:#fff; padding:10px 0; }
+    #levelStripInner { display:flex; gap:8px; overflow-x:auto; padding:0 14px; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
+    #levelStripInner::-webkit-scrollbar { display:none; }
+    .level-pill {
+      flex-shrink:0; border:none; cursor:pointer; font-family:inherit;
+      padding:9px 16px; border-radius:20px; font-size:13px; font-weight:700;
+      background:#F0E6D3; color:#A1887F; white-space:nowrap; transition:all 0.2s;
+    }
+    .level-pill.active { background:#6D4C41; color:#fff; box-shadow:0 3px 10px rgba(109,76,65,0.3); }
+
+    /* ── 子分頁（學習/每日/我的） ── */
+    .sub-tab-row { display:flex; background:#fff; border-top:1px solid #F0E6D3; padding:0 16px; }
+    .sub-tab-btn {
+      flex:1; border:none; background:none; cursor:pointer; font-family:inherit;
+      padding:12px 0; font-size:14px; font-weight:700; color:#C8A882;
+      border-bottom:3px solid transparent; transition:all 0.2s;
+    }
+    .sub-tab-btn.active { color:#6D4C41; border-bottom-color:#8D6E63; }
+
+    /* ── Content ── */
+    #content { flex:1; overflow-y:auto; background:#F5EDE3; -webkit-overflow-scrolling:touch; }
+    .tab-content { padding:14px 16px 24px; }
+
+    /* 敬請期待 */
+    .coming-soon { text-align:center; padding:60px 20px; }
+    .coming-soon-icon { font-size:44px; margin-bottom:14px; }
+    .coming-soon-text { font-size:14px; color:#A1887F; font-weight:600; line-height:1.6; }
+
+    /* 學習路徑 intro */
+    .learn-intro { margin-bottom:14px; }
+    .learn-intro-title { font-size:18px; font-weight:800; color:#3E2723; margin-bottom:3px; }
+    .learn-intro-desc { font-size:12.5px; color:#A1887F; font-weight:600; }
+
+    /* 階段卡片 */
+    .phase-card { background:#fff; border-radius:16px; margin-bottom:12px; box-shadow:0 2px 12px rgba(109,76,65,0.08); overflow:hidden; }
+    .phase-card.locked { opacity:0.55; }
+    .phase-head { width:100%; border:none; background:none; cursor:pointer; font-family:inherit; padding:15px 16px; display:flex; justify-content:space-between; align-items:center; text-align:left; }
+    .phase-head-left { display:flex; align-items:center; gap:12px; min-width:0; }
+    .phase-bar { width:4px; height:34px; border-radius:3px; flex-shrink:0; }
+    .phase-title { font-size:14.5px; font-weight:800; color:#3E2723; margin-bottom:3px; }
+    .phase-sub { font-size:11.5px; color:#A1887F; font-weight:600; }
+    .phase-head-right { display:flex; align-items:center; gap:8px; flex-shrink:0; }
+    .phase-pct { font-size:12px; font-weight:800; color:#8D6E63; background:#F3EBE5; padding:3px 10px; border-radius:20px; }
+    .phase-arrow { font-size:11px; color:#C8A882; }
+    .phase-lock { font-size:11.5px; font-weight:700; color:#C8A882; background:#F5EDE7; padding:4px 12px; border-radius:20px; }
+    .phase-body { padding:0 16px 12px; }
+    .phase-body.hidden { display:none; }
+    .phase-item { display:flex; align-items:center; gap:12px; padding:11px 4px; border-top:1px solid #F5EDE7; cursor:pointer; }
+    .phase-check { width:22px; height:22px; border-radius:50%; border:2px solid #D7C4A8; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:12px; color:#fff; transition:all 0.2s; }
+    .phase-check.checked { background:#8D6E63; border-color:#8D6E63; }
+    .phase-item-text { font-size:13.5px; color:#5D4037; line-height:1.5; }
+    .phase-item-text.checked { color:#A1887F; text-decoration:line-through; }
+
+    /* 每日總覽卡 */
+    .daily-summary-card { background:linear-gradient(135deg,#6D4C41,#8D6E63); border-radius:18px; padding:18px 20px; margin-bottom:16px; color:#fff; }
+    .daily-summary-date { font-size:12px; opacity:0.85; margin-bottom:4px; }
+    .daily-summary-greet { font-size:18px; font-weight:800; margin-bottom:16px; }
+    .daily-summary-stats { display:flex; justify-content:space-between; }
+    .daily-stat { text-align:center; flex:1; }
+    .daily-stat-num { font-size:26px; font-weight:900; line-height:1; }
+    .daily-stat-label { font-size:11px; opacity:0.8; margin-top:4px; font-weight:600; }
+
+    /* Day 1-90 日曆條（每日分頁專用） */
+    .day-strip-wrap { margin-bottom:14px; }
+    .day-strip-label { font-size:12px; font-weight:700; color:#A1887F; margin-bottom:8px; padding-left:2px; }
+    #dailyDayStrip { display:flex; gap:6px; overflow-x:auto; padding:2px 2px 6px; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
+    #dailyDayStrip::-webkit-scrollbar { display:none; }
+    .ddp {
+      flex-shrink:0; min-width:42px; height:50px; border-radius:12px;
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      background:#fff; cursor:pointer; border:2px solid transparent; position:relative;
+      transition:all 0.15s;
+    }
+    .ddp-num { font-size:14px; font-weight:800; color:#A1887F; line-height:1; }
+    .ddp-sub { font-size:8.5px; color:#C8A882; margin-top:2px; font-weight:600; }
+    .ddp.today { border-color:#A1887F; }
+    .ddp.selected { background:#6D4C41; }
+    .ddp.selected .ddp-num { color:#fff; }
+    .ddp.selected .ddp-sub { color:rgba(255,245,235,0.75); }
+    .ddp-dot { position:absolute; top:4px; right:5px; width:6px; height:6px; border-radius:50%; background:#8D6E63; }
+    .ddp.selected .ddp-dot { background:rgba(255,245,235,0.8); }
+    .viewing-day-banner {
+      background:#EDE0D4; border-radius:10px; padding:8px 14px; margin-bottom:12px;
+      display:flex; justify-content:space-between; align-items:center;
+    }
+    .viewing-day-banner span { font-size:12px; color:#8D6E63; font-weight:600; }
+    .back-today-btn { font-size:11px; font-weight:700; color:#6D4C41; background:#D7C4A8; border:none; border-radius:8px; padding:4px 10px; cursor:pointer; font-family:inherit; }
+
+
+    /* 額度區塊 */
+    .quota-section { background:#fff; border-radius:16px; padding:14px 16px; margin-bottom:14px; box-shadow:0 2px 12px rgba(109,76,65,0.08); }
+    .quota-section-head { display:flex; justify-content:space-between; align-items:center; font-size:13.5px; font-weight:800; color:#3E2723; margin-bottom:10px; }
+    .quota-section-head span:first-child::before { content:'● '; color:#C8A882; }
+    .ratio-tags { display:flex; gap:6px; margin-bottom:12px; flex-wrap:wrap; }
+    .ratio-tag { font-size:11px; font-weight:700; padding:4px 10px; border-radius:20px; background:#F5EDE7; color:#8D6E63; }
+    .ratio-dot { display:inline-block; width:6px; height:6px; border-radius:50%; margin-right:4px; }
+    .quota-item { display:flex; justify-content:space-between; align-items:center; padding:11px 0; border-top:1px solid #F5EDE7; }
+    .quota-item:first-child { border-top:none; }
+    .quota-item-left { display:flex; align-items:center; gap:10px; }
+    .quota-icon { font-size:20px; }
+    .quota-item-label { font-size:13.5px; font-weight:700; color:#3E2723; }
+    .quota-item-target { font-size:11px; color:#A1887F; margin-top:1px; }
+    .quota-counter { display:flex; align-items:center; gap:10px; }
+    .quota-btn { width:28px; height:28px; border-radius:50%; border:none; background:#F0E6D3; color:#8D6E63; font-size:17px; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center; font-family:inherit; }
+    .quota-btn.plus { background:#8D6E63; color:#fff; }
+    .quota-btn:active { transform:scale(0.92); }
+    .quota-value { font-size:16px; font-weight:800; color:#3E2723; min-width:18px; text-align:center; }
+    .quota-item.met .quota-item-label { color:#8D6E63; }
+    .quota-value.met { color:#8D6E63; }
+
+    /* 檢核表 */
+    .checklist-header { margin-bottom:14px; }
+    .checklist-header-title { font-size:18px; font-weight:800; color:#3E2723; margin-bottom:3px; }
+    .checklist-header-sub { font-size:12.5px; color:#A1887F; font-weight:600; }
+    .checklist-step-card { background:#fff; border-radius:16px; margin-bottom:12px; box-shadow:0 2px 12px rgba(109,76,65,0.08); overflow:hidden; }
+    .checklist-step-head { display:flex; align-items:center; gap:10px; padding:13px 16px 10px; }
+    .checklist-step-badge { width:26px; height:26px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; color:#fff; flex-shrink:0; }
+    .checklist-step-title { font-size:14px; font-weight:800; color:#3E2723; line-height:1.4; }
+    .checklist-step-body { padding:0 16px 13px; }
+    .checklist-sub-label { font-size:11.5px; font-weight:700; color:#A1887F; margin:6px 0 8px 36px; }
+    .checklist-item { display:flex; align-items:flex-start; gap:10px; padding:8px 0 8px 36px; cursor:pointer; }
+    .checklist-check { width:20px; height:20px; border-radius:6px; border:2px solid #D7C4A8; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:11px; color:#fff; transition:all 0.2s; margin-top:1px; }
+    .checklist-check.checked { border-color:transparent; }
+    .checklist-text { font-size:13px; color:#5D4037; line-height:1.55; }
+    .checklist-text.checked { color:#A1887F; text-decoration:line-through; }
+    .checklist-banner { border-radius:14px; padding:14px; text-align:center; font-size:14px; font-weight:800; color:#fff; margin-top:6px; }
+
+    /* 我的 stats */
+    .section-title { font-size:13px; font-weight:700; color:#6D4C41; margin-bottom:12px; margin-top:4px; letter-spacing:0.5px; }
+    .milestone-row { display:flex; justify-content:space-between; background:#fff; border-radius:16px; padding:16px 8px; margin-bottom:14px; box-shadow:0 2px 14px rgba(109,76,65,0.09); }
+    .milestone { display:flex; flex-direction:column; align-items:center; flex:1; transition:opacity 0.4s; }
+    .milestone-icon { font-size:22px; margin-bottom:5px; display:block; transition:transform 0.3s; }
+    .milestone-day { font-size:10px; color:#A1887F; font-weight:700; }
+    .milestone-label { font-size:9.5px; color:#6D4C41; text-align:center; margin-top:2px; }
+    .me-stats-card { background:#fff; border-radius:16px; padding:16px 18px; box-shadow:0 2px 14px rgba(109,76,65,0.09); }
+    .me-stat-row { display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-top:1px solid #F5EDE7; }
+    .me-stat-row:first-child { border-top:none; }
+    .me-stat-label { font-size:13px; color:#6D4C41; font-weight:600; }
+    .me-stat-value { font-size:15px; color:#3E2723; font-weight:800; }
+
+    /* Tab Bar */
+    #tabbar { display:flex; background:#fff; border-top:1px solid #D7C4A8; padding-top:8px; padding-bottom:env(safe-area-inset-bottom,16px); flex-shrink:0; }
+    .tab-btn { flex:1; background:none; border:none; display:flex; flex-direction:column; align-items:center; cursor:pointer; padding:4px 0; }
+    .tab-icon-wrap { font-size:22px; margin-bottom:3px; width:36px; height:36px; display:flex; align-items:center; justify-content:center; border-radius:10px; transition:background 0.2s; }
+    .tab-icon-wrap.active { background:#F0E6D3; }
+    .tab-label { font-size:10px; font-weight:500; color:#A1887F; }
+    .tab-label.active { color:#6D4C41; font-weight:700; }
+
+    /* 復盤 */
+    .seg-control { display:flex; background:#D7C4A8; border-radius:12px; padding:3px; margin-bottom:18px; }
+    .seg-btn { flex:1; border:none; background:none; border-radius:10px; padding:8px 0; font-size:13px; font-weight:600; color:#A1887F; cursor:pointer; transition:all 0.2s; font-family:inherit; }
+    .seg-btn.active { background:#fff; color:#3E2723; box-shadow:0 2px 8px rgba(109,76,65,0.15); }
+    .prompt-q { font-size:14px; font-weight:600; color:#3E2723; margin-bottom:8px; }
+    textarea { width:100%; min-height:80px; border:1.5px solid #D7C4A8; border-radius:12px; padding:12px 14px; font-size:14px; color:#3E2723; background:#fff; resize:none; outline:none; font-family:inherit; line-height:1.65; }
+    textarea:focus { border-color:#A1887F; }
+    .prompt-group { margin-bottom:16px; }
+    .save-btn { width:100%; padding:14px 0; background:linear-gradient(135deg,#6D4C41,#A1887F); color:#fff; border:none; border-radius:14px; font-size:16px; font-weight:700; cursor:pointer; margin-top:4px; letter-spacing:0.8px; font-family:inherit; box-shadow:0 4px 14px rgba(109,76,65,0.35); }
+    .save-btn:active { opacity:0.88; transform:scale(0.98); }
+
+    /* 歷史復盤 */
+    .history-divider { display:flex; align-items:center; gap:10px; margin:22px 0 14px; }
+    .history-divider-line { flex:1; height:1px; background:#D7C4A8; }
+    .history-divider-text { font-size:12px; font-weight:700; color:#A1887F; letter-spacing:0.5px; white-space:nowrap; }
+    .history-card { background:#fff; border-radius:16px; padding:14px 16px; margin-bottom:12px; box-shadow:0 2px 10px rgba(109,76,65,0.08); }
+    .history-date { font-size:11px; font-weight:800; color:#A1887F; letter-spacing:0.5px; margin-bottom:10px; display:flex; align-items:center; gap:6px; }
+    .history-date-dot { width:6px; height:6px; border-radius:50%; background:#C8A882; flex-shrink:0; }
+    .history-qa { margin-bottom:8px; }
+    .history-q { font-size:11px; color:#C8A882; font-weight:700; margin-bottom:3px; }
+    .history-a { font-size:13px; color:#5D4037; line-height:1.6; }
+    .history-empty { text-align:center; padding:24px 0; font-size:13px; color:#C8A882; }
+
+    /* SOP */
+    .sale-header { font-size:20px; font-weight:800; margin-bottom:16px; }
+    .accordion { margin-bottom:10px; }
+    .accordion-head { width:100%; background:#fff; border:none; border-radius:0 14px 14px 0; padding:14px 16px; display:flex; justify-content:space-between; align-items:center; font-size:15px; font-weight:700; color:#3E2723; cursor:pointer; box-shadow:0 2px 10px rgba(109,76,65,0.08); text-align:left; font-family:inherit; }
+    .accordion-body { background:#fff; border-radius:0 0 14px 14px; padding:8px 16px 14px; margin-top:-4px; }
+    .check-item { display:flex; align-items:flex-start; gap:10px; padding:9px 0; font-size:13.5px; color:#6D4C41; border-bottom:1px solid #F0E6D3; line-height:1.55; }
+    .check-item:last-child { border-bottom:none; }
+    .check-dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; margin-top:6px; }
+    .hidden { display:none; }
+  </style>
+</head>
+<body>
+<div id="app">
+  <div id="header">
+    <div class="header-inner">
+      <div class="mini-cal">
+        <div class="mini-cal-top" id="calMonth"></div>
+        <div class="mini-cal-body">
+          <div class="mini-cal-day-num" id="calDayNum"></div>
+          <div class="mini-cal-weekday" id="calWeekday"></div>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="header-right-top">
+          <div class="phase-badge" id="phaseBadge"></div>
+          <div class="day-counter" id="dayBig"></div>
+        </div>
+        <div class="energy-box">
+          <div class="energy-label">☕ 今日能量補給站</div>
+          <div class="energy-text" id="mottoText"></div>
+        </div>
+      </div>
+    </div>
+    <div class="progress-row">
+      <div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
+      <div class="progress-label" id="progressLabel"></div>
+    </div>
+  </div>
+
+  <!-- 等級切換 -->
+  <div id="levelStrip">
+    <div id="levelStripInner"></div>
+  </div>
+
+  <!-- 子分頁（學習/每日/我的） -->
+  <div id="subTabRow" class="sub-tab-row">
+    <button class="sub-tab-btn active" data-sub="learn" onclick="switchSubTab('learn',this)">學習</button>
+    <button class="sub-tab-btn" data-sub="daily" onclick="switchSubTab('daily',this)">每日</button>
+    <button class="sub-tab-btn" data-sub="checklist" onclick="switchSubTab('checklist',this)">檢核表</button>
+    <button class="sub-tab-btn" data-sub="me" onclick="switchSubTab('me',this)">里程碑</button>
+  </div>
+
+  <div id="content">
+    <!-- 首頁 -->
+    <div id="tab-home" class="tab-content">
+
+      <!-- 敬請期待（二級以上）-->
+      <div id="comingSoon" class="coming-soon hidden">
+        <div class="coming-soon-icon">🔒</div>
+        <div class="coming-soon-text">這個等級的內容還在準備中<br>敬請期待！</div>
+      </div>
+
+      <!-- 學習 -->
+      <div id="sub-learn" class="sub-tab-content">
+        <div class="learn-intro">
+          <div class="learn-intro-title" id="learnPathTitle">新夥伴學習路徑</div>
+          <div class="learn-intro-desc">完成每個任務，解鎖下一階段</div>
+        </div>
+        <div id="phaseList"></div>
+      </div>
+
+      <!-- 每日 -->
+      <div id="sub-daily" class="sub-tab-content hidden">
+        <div class="day-strip-wrap">
+          <div class="day-strip-label">📅 點選查看 Day 1-90 的紀錄</div>
+          <div id="dailyDayStrip"></div>
+        </div>
+        <div id="dailyEmptyState" class="coming-soon hidden" style="padding:40px 20px;">
+          <div class="coming-soon-icon">📝</div>
+          <div class="coming-soon-text" id="dailyEmptyText"></div>
+        </div>
+        <div id="dailyQuotaContainer">
+          <div id="viewingDayBanner" class="viewing-day-banner hidden">
+            <span id="viewingDayLabel"></span>
+            <button class="back-today-btn" onclick="backToTodayQuota()">回到今天</button>
+          </div>
+          <div class="daily-summary-card">
+            <div class="daily-summary-date" id="dailyDateText"></div>
+            <div class="daily-summary-greet" id="dailyGreetText"></div>
+            <div class="daily-summary-stats">
+              <div class="daily-stat"><div class="daily-stat-num" id="statDone">0</div><div class="daily-stat-label">已完成</div></div>
+              <div class="daily-stat"><div class="daily-stat-num" id="statTotal">0</div><div class="daily-stat-label">總任務</div></div>
+              <div class="daily-stat"><div class="daily-stat-num" id="statStreak">0</div><div class="daily-stat-label">連續天數🔥</div></div>
+            </div>
+          </div>
+
+          <div class="quota-section">
+            <div class="quota-section-head"><span>限動發布</span><span id="storyQuotaCount">0/3</span></div>
+            <div class="ratio-tags" id="ratioTags"></div>
+            <div id="storyQuotaList"></div>
+          </div>
+
+          <div class="quota-section">
+            <div class="quota-section-head"><span>每日習慣</span><span id="habitQuotaCount">0/3</span></div>
+            <div id="habitQuotaList"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 檢核表 -->
+      <div id="sub-checklist" class="sub-tab-content hidden">
+        <div id="checklistEmptyState" class="coming-soon hidden" style="padding:40px 20px;">
+          <div class="coming-soon-icon">📋</div>
+          <div class="coming-soon-text" id="checklistEmptyText"></div>
+        </div>
+        <div id="checklistContainer">
+          <div class="checklist-header" id="checklistHeader">
+            <div class="checklist-header-title" id="checklistTitle"></div>
+            <div class="checklist-header-sub" id="checklistSubtitle"></div>
+          </div>
+          <div id="checklistSteps"></div>
+          <div class="checklist-banner" id="checklistBanner"></div>
+        </div>
+      </div>
+
+      <!-- 我的 -->
+      <div id="sub-me" class="sub-tab-content hidden">
+        <div class="section-title">⛳ 里程碑</div>
+        <div class="milestone-row" id="milestoneRow"></div>
+        <div class="section-title">📊 個人總覽</div>
+        <div class="me-stats-card" id="meStatsCard"></div>
+      </div>
+    </div>
+
+    <!-- 復盤 -->
+    <div id="tab-review" class="tab-content hidden">
+      <div class="seg-control">
+        <button class="seg-btn active" onclick="switchReview('日復盤',this)">日復盤</button>
+        <button class="seg-btn" onclick="switchReview('週復盤',this)">週復盤</button>
+        <button class="seg-btn" onclick="switchReview('月復盤',this)">月復盤</button>
+      </div>
+      <div id="reviewQuestions"></div>
+      <button class="save-btn" onclick="saveReview()">☕ 儲存復盤</button>
+      <div class="history-divider">
+        <div class="history-divider-line"></div>
+        <div class="history-divider-text">📖 過去的復盤記錄</div>
+        <div class="history-divider-line"></div>
+      </div>
+      <div id="reviewHistory"></div>
+    </div>
+
+    <div id="tab-presale" class="tab-content hidden">
+      <div class="sale-header" style="color:#8D6E63">🎯 售前 SOP</div>
+      <div id="presale-body"></div>
+    </div>
+    <div id="tab-insale" class="tab-content hidden">
+      <div class="sale-header" style="color:#795548">💼 售中 SOP</div>
+      <div id="insale-body"></div>
+    </div>
+    <div id="tab-aftersale" class="tab-content hidden">
+      <div class="sale-header" style="color:#6D4C41">🌟 售後 SOP</div>
+      <div id="aftersale-body"></div>
+    </div>
+  </div>
+
+  <div id="tabbar">
+    <button class="tab-btn" onclick="switchTab('home',this)">
+      <div class="tab-icon-wrap active">🏠</div><span class="tab-label active">首頁</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('review',this)">
+      <div class="tab-icon-wrap">📊</div><span class="tab-label">復盤</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('presale',this)">
+      <div class="tab-icon-wrap">🎯</div><span class="tab-label">售前</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('insale',this)">
+      <div class="tab-icon-wrap">💼</div><span class="tab-label">售中</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('aftersale',this)">
+      <div class="tab-icon-wrap">🌟</div><span class="tab-label">售後</span>
+    </button>
+  </div>
+</div>
+
+<script>
+const STORAGE_KEY = 'companion_start_date';
+
+// ════════════════════════════════════════════════════════════
+//  ✏️ 等級設定
+// ════════════════════════════════════════════════════════════
+const LEVELS = [
+  { key:'newbie', label:'新人訓練', ready:true },
+  { key:'lv3',    label:'三級輔導', ready:true },
+  { key:'lv2',    label:'二級輔導', ready:true },
+  { key:'lv1',    label:'一級培訓', ready:true },
+  { key:'royal',  label:'皇家培訓', ready:true },
+];
+
+// ════════════════════════════════════════════════════════════
+//  ✏️ 新夥伴學習路徑 — 4 大階段，完成全部項目才解鎖下一階段
+//  修改 title 或 items 文字即可調整內容
+// ════════════════════════════════════════════════════════════
+const LEARNING_PATH = {
+  newbie: [
+    {
+      title: '第一階段：認識品牌與產品',
+      color: '#8D6E63',
+      items: [
+        '認識公司背景與品牌故事',
+        '了解團隊文化與核心價值',
+        '開始使用產品，記錄第一週體感日記',
+        '閱讀產品成份說明與功效',
+        '完成產品知識小測驗（自我評估）',
+        '建立個人使用前後對比照片檔案',
+      ],
+    },
+    {
+      title: '第二階段：練習限動分享',
+      color: '#A0826D',
+      items: [
+        '學習手機拍照基礎技巧（光線、角度、構圖）',
+        '認識並練習操作限動 APP 功能',
+        '練習寫一篇生活風格文字限動',
+        '練習寫一篇產品使用心得文字限動',
+        '嘗試錄製一段口播限動（30 秒內）',
+        '觀察 2 位學長姐的限動風格並記錄心得',
+        '連續 7 天完成限動發布打卡',
+      ],
+    },
+    {
+      title: '第三階段：練習影片剪輯',
+      color: '#795548',
+      items: [
+        '學習如何挑選拍攝場景與光線',
+        '練習用手機拍攝一段 15 秒短影片',
+        '學習基礎剪輯軟體操作（剪映 / CapCut）',
+        '練習寫一篇吸引人的影片文案',
+        '完成第一支零售短影片並剪輯完成',
+        '學習 IG／抖音／小紅書三平台版面差異',
+        '將影片正式上架到至少一個平台',
+      ],
+    },
+    {
+      title: '第四階段：銷售實戰',
+      color: '#6D4C41',
+      items: [
+        '學習基礎銷售話術與異議處理',
+        '完成一次模擬銷售對話演練',
+        '嘗試對一位真實客戶做產品介紹',
+        '學習售後服務 SOP 與常見問題回覆',
+        '練習使用團隊記帳 APP 記錄一筆訂單',
+        '完成第一筆真實成交或邀約',
+        '與主管進行銷售複盤討論',
+      ],
+    },
+  ],
+};
+
+// ════════════════════════════════════════════════════════════
+//  ✏️ 每日額度設定（限動發布比例 + 每日習慣）
+//  target 可自行調整數字
+// ════════════════════════════════════════════════════════════
+const DAILY_QUOTA = {
+  newbie: {
+    stories: [
+      { key:'life',    icon:'🌿', label:'生活限動',     target:3 },
+      { key:'product', icon:'✨', label:'產品相關限動', target:2 },
+      { key:'learn',   icon:'📖', label:'學習/成長分享', target:1 },
+    ],
+    habits: [
+      { key:'morning', icon:'🔥', label:'早安打卡',       target:1 },
+      { key:'night',   icon:'📝', label:'睡前復盤',       target:1 },
+      { key:'cheer',   icon:'💬', label:'幫夥伴留言打氣', target:1 },
+    ],
+  },
+};
+
+// ════════════════════════════════════════════════════════════
+//  ✏️ 各等級檢核表（依「100+分店檢核表」內容整理）
+//  每個 step 可選填 subLabel（小標題文字），items 為可打勾項目
+// ════════════════════════════════════════════════════════════
+const CHECKLIST = {
+  newbie: {
+    title: '三級零售檢核表',
+    subtitle: '建立成交力',
+    color: '#A1887F',
+    steps: [
+      { step:1, title:'準備好S級見證', items:['版面渲染自身S級見證（零售動機）'] },
+      { step:2, title:'完成報考＋考核', items:['完成三級輔導督導報考','通過三級輔導督導考核'] },
+      { step:3, title:'晉升條件檢核', items:['已準備好S級見證','已完成報考＋考核','已建立第一批加盟商'] },
+    ],
+    bannerText: '🏆 達成條件即可晉升三級輔導',
+  },
+  lv3: {
+    title: '三級輔導檢核表',
+    subtitle: '建立第一批加盟商',
+    color: '#8D6E63',
+    steps: [
+      { step:1, title:'版面渲染自身S級見證（零售動機）', items:['已完成版面渲染自身S級見證'] },
+      { step:2, title:'關心以往回購客（售後服務）', items:['已關心以往回購客'] },
+      { step:3, title:'跟上家設定目標拓展4-8位實習加盟', subLabel:'目標設定：', items:['招募增加幾位新客','XX位實習加盟'] },
+      { step:4, title:'跟上家設定每日排程（目標碎片化）', subLabel:'每日排程：', items:['每週幾隻 Reels','每日幾篇零售動態＋自用加盟的動態','睡前五分鐘復盤每日完成事項'] },
+      { step:5, title:'跟上家練習意象銷售對話', items:['銷售對話：如何成交愛用者加盟'] },
+      { step:6, title:'成功拓展4-8位實習加盟', items:['已成功拓展4-8位實習加盟'] },
+    ],
+    bannerText: '🏆 即可安排晉升二級',
+  },
+  lv2: {
+    title: '二級輔導檢核表',
+    subtitle: '建立團隊系統',
+    color: '#795548',
+    steps: [
+      { step:1, title:'版面渲染自身S級見證＋9S見證（零售動機）', items:['已完成版面渲染自身S級見證＋9S見證'] },
+      { step:2, title:'關心以往回購客（售後服務）', items:['已關心以往回購客'] },
+      { step:3, title:'建立愛用者群組關心4-8位實習加盟（售後服務）', items:['已建立愛用者群組關心4-8位實習加盟'] },
+      { step:4, title:'跟上家設定目標提高叫貨額＋團隊總人數', subLabel:'目標包含：', items:['零售四大循環如何提高至2倍的成績','團隊總人數目標設定：10位','每月新客增加 XX 位'] },
+      { step:5, title:'跟上家設定每日排程', items:['原訂的每週 reels ＆每日動態拉到2倍以上'] },
+      { step:6, title:'突破10-15位團隊總人數', items:['即可送審一級'] },
+      { step:7, title:'養成習慣每天自主復盤', subLabel:'復盤內容：', items:['今日自主學習的課程、近期流量如何、動態更新頻率與數量、拓展幾位新客、新增幾位新加盟、遇到什麼問題'] },
+      { step:8, title:'重複執行零售＆招商四大循環', items:['趕緊公司團隊培訓'] },
+    ],
+    bannerText: '🏆 團隊10-15位即可送審一級',
+  },
+  lv1: {
+    title: '一級輔導檢核表',
+    subtitle: '打造100+分店複製系統',
+    color: '#6D4C41',
+    steps: [
+      { step:1, title:'版面渲染自身S級見證＋9S見證＋客戶S級見證（零售動機）', items:['已完成版面渲染三種見證'] },
+      { step:2, title:'關心以往回購客（售後服務）', items:['已關心以往回購客'] },
+      { step:3, title:'愛用者群組關心10位以上的加盟（售後服務）', items:['已關心10位以上的加盟'] },
+      { step:4, title:'版面渲染晉升的好消息（專業成長）', items:['已渲染晉升好消息'] },
+      { step:5, title:'版面渲染從0到有的過程（專業成長）', items:['已渲染從0到有的過程：收入成長、團隊成長、家庭層面的S級見證、個人生活S級見證'] },
+      { step:6, title:'跟上家設定目標提高叫貨額＋團隊總人數', subLabel:'目標包含：', items:['招商四大循環如何提高至2倍的成績','團隊總人數目標設定：30位','每月經營者新增 XX 位'] },
+      { step:7, title:'跟上家練習成交經營者（銷售對話）', items:['已練習成交經營者'] },
+      { step:8, title:'持續養成習慣每天自主複盤', subLabel:'復盤內容：', items:['今日自主複盤、近期流量如何、動態更新頻率與數量、拓展幾位新客、新增幾位新加盟、遇到什麼問題'] },
+      { step:9, title:'協助愛用夥伴開始分享賺錢（降低愛用困難＋抗拒點）', items:['已協助夥伴分享賺錢'] },
+      { step:10, title:'帶領三級零售考取三級輔導督導', items:['已帶領考取三級輔導督導'] },
+      { step:11, title:'重複執行零售＆招商四大循環', items:['已持續執行循環並培訓團隊'] },
+    ],
+    bannerText: '👑 持續倍增團隊 → 打造100+分店',
+  },
+};
+
+const reviewPrompts = {
+  '日復盤':['今天完成了哪些任務？','遇到什麼困難？如何解決？','明天的優先事項是？'],
+  '週復盤':['本週最大的收穫是？','哪個環節可以做得更好？','下週想突破的一件事？'],
+  '月復盤':['本月目標達成了幾%？','客戶/同事給你什麼反饋？','對下個月的期待是？'],
+};
+
+const saleData = {
+  presale:[
+    {title:'客戶開發',items:['建立目標客戶名單（每日 20 筆）','研究客戶背景與痛點','準備個性化開場白']},
+    {title:'需求探索',items:['SPIN 提問法練習','傾聽與記錄技巧','確認預算與決策者']},
+    {title:'方案準備',items:['客製化提案模板','競品比較話術','異議處理 SOP']},
+  ],
+  insale:[
+    {title:'首次見面',items:['建立信任感的開場','展示核心價值主張','Demo 流程標準化']},
+    {title:'推進成交',items:['跟進節奏（24h/3天/7天）','促成技巧 TOP5','合約條款說明要點']},
+    {title:'處理異議',items:['價格異議話術','競品比較回應','決策拖延破局法']},
+  ],
+  aftersale:[
+    {title:'交付期',items:['入職/導入 SOP 流程','設定 30/60/90 天里程碑','建立客戶成功指標']},
+    {title:'維護期',items:['定期回訪節奏設定','問題升級處理流程','增購/轉介紹時機']},
+    {title:'忠誠期',items:['年度回顧報告模板','客戶見證採集','口碑推薦計畫']},
+  ],
+};
+
+const phases = [
+  { name:'啟動期', range:[1,30] },
+  { name:'成長期', range:[31,60] },
+  { name:'獨立期', range:[61,90] },
+];
+
+let startDate, todayNum, currentPhase, reviewTab = '日復盤';
+let currentLevel = 'newbie';
+let currentSub = 'learn';
+let phaseOpenIdx = null;
+let viewDayNum = 1;
+
+function dateKey(d) {
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+function todayKey() { return dateKey(new Date()); }
+function dayNumToDate(dayN) {
+  const d = new Date(startDate);
+  d.setDate(d.getDate() + (dayN - 1));
+  return d;
+}
+function dayNumToKey(dayN) { return dateKey(dayNumToDate(dayN)); }
+
+function getLearnKey(level, phaseIdx, itemIdx) { return `learn_${level}_${phaseIdx}_${itemIdx}`; }
+function isLearnChecked(level, phaseIdx, itemIdx) { return localStorage.getItem(getLearnKey(level,phaseIdx,itemIdx)) === '1'; }
+function setLearnChecked(level, phaseIdx, itemIdx, val) { localStorage.setItem(getLearnKey(level,phaseIdx,itemIdx), val?'1':'0'); }
+
+function isPhaseComplete(level, phaseIdx) {
+  const phase = LEARNING_PATH[level]?.[phaseIdx];
+  if (!phase) return false;
+  return phase.items.every((_,i) => isLearnChecked(level, phaseIdx, i));
+}
+function isPhaseUnlocked(level, phaseIdx) {
+  if (phaseIdx === 0) return true;
+  return isPhaseComplete(level, phaseIdx - 1);
+}
+
+function getChecklistKey(level, stepIdx, itemIdx) { return `checklist_${level}_${stepIdx}_${itemIdx}`; }
+function isChecklistChecked(level, stepIdx, itemIdx) { return localStorage.getItem(getChecklistKey(level,stepIdx,itemIdx)) === '1'; }
+function setChecklistChecked(level, stepIdx, itemIdx, val) { localStorage.setItem(getChecklistKey(level,stepIdx,itemIdx), val?'1':'0'); }
+
+function getQuotaKey(level, dk, itemKey) { return `quota_${level}_${dk}_${itemKey}`; }
+function getQuotaVal(level, dk, itemKey) { return parseInt(localStorage.getItem(getQuotaKey(level,dk,itemKey)) || '0', 10); }
+function setQuotaVal(level, dk, itemKey, val) { localStorage.setItem(getQuotaKey(level,dk,itemKey), String(Math.max(0,val))); }
+
+function allQuotaItems(level) {
+  const q = DAILY_QUOTA[level];
+  if (!q) return [];
+  return [...q.stories, ...q.habits];
+}
+function isDateComplete(level, dk) {
+  const items = allQuotaItems(level);
+  if (!items.length) return false;
+  return items.every(it => getQuotaVal(level, dk, it.key) >= it.target);
+}
+function calcStreak(level) {
+  let streak = 0;
+  let d = new Date();
+  if (!isDateComplete(level, dateKey(d))) d.setDate(d.getDate()-1);
+  while (isDateComplete(level, dateKey(d))) {
+    streak++;
+    d.setDate(d.getDate()-1);
+  }
+  return streak;
+}
+
+function init() {
+  let stored = localStorage.getItem(STORAGE_KEY);
+  if (!stored) { stored = new Date().toISOString(); localStorage.setItem(STORAGE_KEY, stored); }
+  startDate = new Date(stored);
+  const now = new Date();
+  todayNum = Math.min(90, Math.max(1, Math.floor((now - startDate) / 86400000) + 1));
+  viewDayNum = todayNum;
+  currentPhase = phases.find(p => todayNum >= p.range[0] && todayNum <= p.range[1]) || phases[2];
+
+  const MONTHS = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+  const WEEKDAYS = ['週日','週一','週二','週三','週四','週五','週六'];
+  document.getElementById('calMonth').textContent = MONTHS[now.getMonth()];
+  document.getElementById('calDayNum').textContent = now.getDate();
+  document.getElementById('calWeekday').textContent = WEEKDAYS[now.getDay()];
+  document.getElementById('phaseBadge').textContent = currentPhase.name;
+  document.getElementById('dayBig').textContent = `Day ${todayNum} / 90`;
+  const pct = Math.round((todayNum/90)*100);
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('progressLabel').textContent = pct + '%';
+  document.getElementById('mottoText').textContent = todayNum <= 30 ? '學習比完美更重要，先動起來！'
+    : todayNum <= 60 ? '量變帶來質變，每天進步 1%。'
+    : '你已經是核心成員，相信自己！';
+
+  buildLevelStrip();
+  renderLevelView();
+  renderSaleTabs();
+  renderReview();
+}
+
+function buildLevelStrip() {
+  document.getElementById('levelStripInner').innerHTML = LEVELS.map(l => `
+    <button class="level-pill ${l.key===currentLevel?'active':''}" onclick="switchLevel('${l.key}')">${l.label}</button>
+  `).join('');
+}
+function switchLevel(key) {
+  currentLevel = key;
+  buildLevelStrip();
+  renderLevelView();
+}
+
+function switchSubTab(key, btn) {
+  currentSub = key;
+  document.querySelectorAll('.sub-tab-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  renderLevelView();
+}
+
+function renderLevelView() {
+  const level = LEVELS.find(l => l.key === currentLevel);
+  const subRow = document.getElementById('subTabRow');
+  const comingSoon = document.getElementById('comingSoon');
+  const learnTab = document.getElementById('sub-learn');
+  const dailyTab = document.getElementById('sub-daily');
+  const checklistTab = document.getElementById('sub-checklist');
+  const meTab = document.getElementById('sub-me');
+
+  if (!level.ready) {
+    subRow.style.display = 'none';
+    comingSoon.classList.remove('hidden');
+    learnTab.classList.add('hidden');
+    dailyTab.classList.add('hidden');
+    checklistTab.classList.add('hidden');
+    meTab.classList.add('hidden');
+    return;
+  }
+
+  subRow.style.display = 'flex';
+  comingSoon.classList.add('hidden');
+  learnTab.classList.toggle('hidden', currentSub !== 'learn');
+  dailyTab.classList.toggle('hidden', currentSub !== 'daily');
+  checklistTab.classList.toggle('hidden', currentSub !== 'checklist');
+  meTab.classList.toggle('hidden', currentSub !== 'me');
+
+  if (currentSub === 'learn') renderLearnTab();
+  else if (currentSub === 'daily') renderDailyTab();
+  else if (currentSub === 'checklist') renderChecklistTab();
+  else renderMeTab();
+}
+
+function renderLearnTab() {
+  const level = LEVELS.find(l => l.key === currentLevel);
+  document.getElementById('learnPathTitle').textContent = `${level.label}學習路徑`;
+  const pathPhases = LEARNING_PATH[currentLevel] || [];
+
+  if (!pathPhases.length) {
+    document.getElementById('phaseList').innerHTML = `
+      <div class="coming-soon" style="padding:40px 20px;">
+        <div class="coming-soon-icon">📝</div>
+        <div class="coming-soon-text">${level.label}的學習路徑內容<br>還在準備中，敬請期待！</div>
+      </div>`;
+    return;
+  }
+
+  document.getElementById('phaseList').innerHTML = pathPhases.map((phase, pIdx) => {
+    const unlocked = isPhaseUnlocked(currentLevel, pIdx);
+    const doneCount = phase.items.filter((_,i) => isLearnChecked(currentLevel, pIdx, i)).length;
+    const pct = Math.round((doneCount / phase.items.length) * 100);
+    const isOpen = phaseOpenIdx === pIdx;
+    return `
+    <div class="phase-card ${unlocked?'':'locked'}">
+      <button class="phase-head" onclick="${unlocked ? `togglePhaseOpen(${pIdx})` : ''}">
+        <div class="phase-head-left">
+          <div class="phase-bar" style="background:${phase.color}"></div>
+          <div>
+            <div class="phase-title">${phase.title}</div>
+            <div class="phase-sub">${doneCount}/${phase.items.length} 完成</div>
+          </div>
+        </div>
+        <div class="phase-head-right">
+          ${unlocked
+            ? `<span class="phase-pct">${pct}%</span><span class="phase-arrow">${isOpen?'▲':'▼'}</span>`
+            : `<span class="phase-lock">🔒 解鎖中</span>`}
+        </div>
+      </button>
+      <div class="phase-body ${isOpen && unlocked ? '' : 'hidden'}">
+        ${phase.items.map((item, iIdx) => {
+          const checked = isLearnChecked(currentLevel, pIdx, iIdx);
+          return `
+          <div class="phase-item" onclick="toggleLearnItem(${pIdx},${iIdx})">
+            <div class="phase-check ${checked?'checked':''}">${checked?'✓':''}</div>
+            <span class="phase-item-text ${checked?'checked':''}">${item}</span>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function togglePhaseOpen(idx) {
+  phaseOpenIdx = phaseOpenIdx === idx ? null : idx;
+  renderLearnTab();
+}
+
+function toggleLearnItem(phaseIdx, itemIdx) {
+  const now = !isLearnChecked(currentLevel, phaseIdx, itemIdx);
+  setLearnChecked(currentLevel, phaseIdx, itemIdx, now);
+  renderLearnTab();
+}
+
+function renderChecklistTab() {
+  const level = LEVELS.find(l => l.key === currentLevel);
+  const data = CHECKLIST[currentLevel];
+  const emptyState = document.getElementById('checklistEmptyState');
+  const container = document.getElementById('checklistContainer');
+
+  if (!data) {
+    document.getElementById('checklistEmptyText').innerHTML = `${level.label}的檢核表內容<br>還在準備中，敬請期待！`;
+    emptyState.classList.remove('hidden');
+    container.classList.add('hidden');
+    return;
+  }
+  emptyState.classList.add('hidden');
+  container.classList.remove('hidden');
+
+  document.getElementById('checklistTitle').textContent = data.title;
+  document.getElementById('checklistSubtitle').textContent = data.subtitle;
+
+  document.getElementById('checklistSteps').innerHTML = data.steps.map((step, sIdx) => `
+    <div class="checklist-step-card">
+      <div class="checklist-step-head">
+        <div class="checklist-step-badge" style="background:${data.color}">${step.step}</div>
+        <div class="checklist-step-title">${step.title}</div>
+      </div>
+      <div class="checklist-step-body">
+        ${step.subLabel ? `<div class="checklist-sub-label">${step.subLabel}</div>` : ''}
+        ${step.items.map((item, iIdx) => {
+          const checked = isChecklistChecked(currentLevel, sIdx, iIdx);
+          return `
+          <div class="checklist-item" onclick="toggleChecklistItem(${sIdx},${iIdx})">
+            <div class="checklist-check ${checked?'checked':''}" style="${checked?`background:${data.color}`:''}">${checked?'✓':''}</div>
+            <span class="checklist-text ${checked?'checked':''}">${item}</span>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`).join('');
+
+  document.getElementById('checklistBanner').textContent = data.bannerText;
+  document.getElementById('checklistBanner').style.background = data.color;
+}
+
+function toggleChecklistItem(stepIdx, itemIdx) {
+  const now = !isChecklistChecked(currentLevel, stepIdx, itemIdx);
+  setChecklistChecked(currentLevel, stepIdx, itemIdx, now);
+  renderChecklistTab();
+}
+
+function buildDailyDayStrip() {
+  const strip = document.getElementById('dailyDayStrip');
+  let html = '';
+  for (let d = 1; d <= 90; d++) {
+    const isToday = d === todayNum;
+    const isSelected = d === viewDayNum;
+    const dk = dayNumToKey(d);
+    const complete = isDateComplete(currentLevel, dk);
+    html += `<div class="ddp ${isToday?'today':''} ${isSelected?'selected':''}" id="ddp-${d}" onclick="selectQuotaDay(${d})">
+      ${complete ? `<div class="ddp-dot"></div>` : ''}
+      <span class="ddp-num">${d}</span>
+      <span class="ddp-sub">Day</span>
+    </div>`;
+  }
+  strip.innerHTML = html;
+  const sel = document.getElementById(`ddp-${viewDayNum}`);
+  if (sel) sel.scrollIntoView({ behavior:'smooth', block:'nearest', inline:'center' });
+}
+
+function selectQuotaDay(d) {
+  viewDayNum = d;
+  renderDailyTab();
+}
+
+function backToTodayQuota() {
+  viewDayNum = todayNum;
+  renderDailyTab();
+}
+
+function renderDailyTab() {
+  const level = LEVELS.find(l => l.key === currentLevel);
+  const quota = DAILY_QUOTA[currentLevel];
+  const emptyState = document.getElementById('dailyEmptyState');
+  const container = document.getElementById('dailyQuotaContainer');
+
+  if (!quota) {
+    document.getElementById('dailyEmptyText').innerHTML = `${level.label}的每日額度設定<br>還在準備中，敬請期待！`;
+    emptyState.classList.remove('hidden');
+    container.classList.add('hidden');
+    return;
+  }
+  emptyState.classList.add('hidden');
+  container.classList.remove('hidden');
+
+  buildDailyDayStrip();
+
+  const dk = dayNumToKey(viewDayNum);
+  const viewedDate = dayNumToDate(viewDayNum);
+  document.getElementById('dailyDateText').textContent = viewedDate.toLocaleDateString('zh-TW',{year:'numeric',month:'long',day:'numeric',weekday:'long'});
+
+  const banner = document.getElementById('viewingDayBanner');
+  const bannerLabel = document.getElementById('viewingDayLabel');
+  if (viewDayNum !== todayNum) {
+    banner.classList.remove('hidden');
+    bannerLabel.textContent = `📅 正在查看 Day ${viewDayNum} 的紀錄`;
+    document.getElementById('dailyGreetText').textContent = `Day ${viewDayNum} 的打卡紀錄`;
+  } else {
+    banner.classList.add('hidden');
+    const h = new Date().getHours();
+    document.getElementById('dailyGreetText').textContent = h < 12 ? '早安！新的一天加油 🌱' : h < 18 ? '下午好！繼續衝 💪' : '晚安前再衝一波 🌙';
+  }
+
+  const allItems = allQuotaItems(currentLevel);
+  const doneCount = allItems.filter(it => getQuotaVal(currentLevel, dk, it.key) >= it.target).length;
+
+  document.getElementById('statDone').textContent = doneCount;
+  document.getElementById('statTotal').textContent = allItems.length;
+  document.getElementById('statStreak').textContent = calcStreak(currentLevel);
+
+  const storyDone = quota.stories.filter(it => getQuotaVal(currentLevel, dk, it.key) >= it.target).length;
+  document.getElementById('storyQuotaCount').textContent = `${storyDone}/${quota.stories.length}`;
+  const totalTarget = quota.stories.reduce((s,it)=>s+it.target,0);
+  const ratioColors = ['#A1887F','#8D6E63','#6D4C41'];
+  document.getElementById('ratioTags').innerHTML = quota.stories.map((it,i) => {
+    const pct = Math.round((it.target/totalTarget)*100);
+    return `<span class="ratio-tag"><span class="ratio-dot" style="background:${ratioColors[i%3]}"></span>${it.label} ${pct}%</span>`;
+  }).join('');
+  document.getElementById('storyQuotaList').innerHTML = quota.stories.map(it => renderQuotaItem(it, dk)).join('');
+
+  const habitDone = quota.habits.filter(it => getQuotaVal(currentLevel, dk, it.key) >= it.target).length;
+  document.getElementById('habitQuotaCount').textContent = `${habitDone}/${quota.habits.length}`;
+  document.getElementById('habitQuotaList').innerHTML = quota.habits.map(it => renderQuotaItem(it, dk)).join('');
+}
+
+function renderQuotaItem(it, dk) {
+  const val = getQuotaVal(currentLevel, dk, it.key);
+  const met = val >= it.target;
+  return `
+  <div class="quota-item ${met?'met':''}">
+    <div class="quota-item-left">
+      <span class="quota-icon">${it.icon}</span>
+      <div>
+        <div class="quota-item-label">${it.label}</div>
+        <div class="quota-item-target">目標：${it.target} 則</div>
+      </div>
+    </div>
+    <div class="quota-counter">
+      <button class="quota-btn" onclick="adjustQuota('${it.key}',-1)">−</button>
+      <span class="quota-value ${met?'met':''}">${val}</span>
+      <button class="quota-btn plus" onclick="adjustQuota('${it.key}',1)">+</button>
+
+    </div>
+  </div>`;
+}
+
+function adjustQuota(itemKey, delta) {
+  const dk = dayNumToKey(viewDayNum);
+  const cur = getQuotaVal(currentLevel, dk, itemKey);
+  setQuotaVal(currentLevel, dk, itemKey, cur + delta);
+  renderDailyTab();
+}
+
+function renderMeTab() {
+  const milestones = [
+    {day:1,label:'入職',icon:'🌱'},{day:7,label:'一週',icon:'📅'},
+    {day:30,label:'一月',icon:'🏅'},{day:60,label:'兩月',icon:'🚀'},{day:90,label:'結業',icon:'🎓'},
+  ];
+  document.getElementById('milestoneRow').innerHTML = milestones.map(m => {
+    const done = todayNum >= m.day, cur = todayNum === m.day;
+    return `<div class="milestone" style="opacity:${done?1:0.28}">
+      <span class="milestone-icon" style="${cur?'transform:scale(1.3);filter:drop-shadow(0 2px 8px rgba(109,76,65,0.4))':''}">${m.icon}</span>
+      <span class="milestone-day">Day ${m.day}</span>
+      <span class="milestone-label">${m.label}</span>
+    </div>`;
+  }).join('');
+
+  const pathPhases = LEARNING_PATH[currentLevel] || [];
+  const totalItems = pathPhases.reduce((s,p)=>s+p.items.length,0);
+  const doneItems = pathPhases.reduce((s,p,pIdx)=>s+p.items.filter((_,i)=>isLearnChecked(currentLevel,pIdx,i)).length,0);
+  const completedPhases = pathPhases.filter((_,pIdx)=>isPhaseComplete(currentLevel,pIdx)).length;
+  const streak = calcStreak(currentLevel);
+
+  document.getElementById('meStatsCard').innerHTML = `
+    <div class="me-stat-row"><span class="me-stat-label">目前等級</span><span class="me-stat-value">${LEVELS.find(l=>l.key===currentLevel).label}</span></div>
+    <div class="me-stat-row"><span class="me-stat-label">學習進度</span><span class="me-stat-value">${doneItems} / ${totalItems} 項</span></div>
+    <div class="me-stat-row"><span class="me-stat-label">已完成階段</span><span class="me-stat-value">${completedPhases} / ${pathPhases.length}</span></div>
+    <div class="me-stat-row"><span class="me-stat-label">連續打卡</span><span class="me-stat-value">${streak} 天 🔥</span></div>
+  `;
+}
+
+const mainTabs = ['home','review','presale','insale','aftersale'];
+function switchTab(key, btn) {
+  mainTabs.forEach(t => document.getElementById('tab-'+t).classList.add('hidden'));
+  document.getElementById('tab-'+key).classList.remove('hidden');
+  document.getElementById('levelStrip').style.display = key === 'home' ? '' : 'none';
+  if (key !== 'home') document.getElementById('subTabRow').style.display = 'none';
+  else renderLevelView();
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    b.querySelector('.tab-icon-wrap').classList.remove('active');
+    b.querySelector('.tab-label').classList.remove('active');
+  });
+  btn.querySelector('.tab-icon-wrap').classList.add('active');
+  btn.querySelector('.tab-label').classList.add('active');
+  document.getElementById('content').scrollTop = 0;
+}
+
+function getHistoryKey(tab) { return `review_history_${tab}`; }
+function switchReview(tab, btn) {
+  reviewTab = tab;
+  document.querySelectorAll('.seg-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderReview();
+}
+function renderReview() {
+  const prompts = reviewPrompts[reviewTab];
+  const draft = JSON.parse(localStorage.getItem('review_draft_'+reviewTab) || '{}');
+  document.getElementById('reviewQuestions').innerHTML = prompts.map((q,i) => `
+    <div class="prompt-group">
+      <div class="prompt-q">Q${i+1}. ${q}</div>
+      <textarea id="rq${i}" placeholder="點此輸入..." oninput="saveDraft()">${draft[i]||''}</textarea>
+    </div>`).join('');
+  renderHistory();
+}
+function saveDraft() {
+  const data = {};
+  reviewPrompts[reviewTab].forEach((_,i) => {
+    const el = document.getElementById('rq'+i);
+    if (el) data[i] = el.value;
+  });
+  localStorage.setItem('review_draft_'+reviewTab, JSON.stringify(data));
+}
+function saveReview() {
+  const prompts = reviewPrompts[reviewTab];
+  const data = {};
+  let hasContent = false;
+  prompts.forEach((_,i) => {
+    const val = document.getElementById('rq'+i).value.trim();
+    data[i] = val;
+    if (val) hasContent = true;
+  });
+  if (!hasContent) return;
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('zh-TW', { year:'numeric', month:'long', day:'numeric', weekday:'short' });
+  const timeStr = now.toLocaleTimeString('zh-TW', { hour:'2-digit', minute:'2-digit' });
+  const history = JSON.parse(localStorage.getItem(getHistoryKey(reviewTab)) || '[]');
+  history.unshift({ date: dateStr, time: timeStr, data });
+  localStorage.setItem(getHistoryKey(reviewTab), JSON.stringify(history));
+  localStorage.removeItem('review_draft_'+reviewTab);
+  const btn = document.querySelector('.save-btn');
+  btn.textContent = '✅ 已儲存！';
+  setTimeout(() => { btn.textContent = '☕ 儲存復盤'; renderReview(); }, 1200);
+}
+function renderHistory() {
+  const prompts = reviewPrompts[reviewTab];
+  const history = JSON.parse(localStorage.getItem(getHistoryKey(reviewTab)) || '[]');
+  const container = document.getElementById('reviewHistory');
+  if (!history.length) {
+    container.innerHTML = `<div class="history-empty">還沒有復盤記錄，儲存後就會出現在這裡 ☕</div>`;
+    return;
+  }
+  container.innerHTML = history.map(entry => `
+    <div class="history-card">
+      <div class="history-date"><span class="history-date-dot"></span>${entry.date}・${entry.time}</div>
+      ${prompts.map((q,i) => entry.data[i] ? `
+        <div class="history-qa">
+          <div class="history-q">Q${i+1}. ${q}</div>
+          <div class="history-a">${entry.data[i].replace(/\n/g,'<br>')}</div>
+        </div>` : ''
+      ).join('')}
+    </div>`).join('');
+}
+
+const saleColors = { presale:'#8D6E63', insale:'#795548', aftersale:'#6D4C41' };
+function renderSaleTabs() {
+  ['presale','insale','aftersale'].forEach(key => {
+    const color = saleColors[key];
+    document.getElementById(key+'-body').innerHTML = saleData[key].map((s,i) => `
+      <div class="accordion">
+        <button class="accordion-head" style="border-left:3px solid ${color}" onclick="toggleAccordion('${key}-${i}')">
+          <span>${s.title}</span>
+          <span id="arr-${key}-${i}" style="font-size:15px;color:${color};opacity:0.8">▼</span>
+        </button>
+        <div class="accordion-body hidden" id="body-${key}-${i}">
+          ${s.items.map(item=>`<div class="check-item"><span class="check-dot" style="background:${color}"></span>${item}</div>`).join('')}
+        </div>
+      </div>`).join('');
+  });
+}
+function toggleAccordion(id) {
+  const body = document.getElementById('body-'+id);
+  const arr  = document.getElementById('arr-'+id);
+  const open = !body.classList.contains('hidden');
+  body.classList.toggle('hidden', open);
+  arr.textContent = open ? '▼' : '▲';
+}
+
+if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js').catch(()=>{}); }
+init();
+</script>
+</body>
+</html>
