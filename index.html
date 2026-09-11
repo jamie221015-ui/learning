@@ -187,16 +187,14 @@
     /* Tab Bar */
     #tabbar { display:flex; background:#fff; border-top:1px solid #D7C4A8; padding-top:8px; padding-bottom:env(safe-area-inset-bottom,16px); flex-shrink:0; }
     .tab-btn { flex:1; background:none; border:none; display:flex; flex-direction:column; align-items:center; cursor:pointer; padding:4px 0; }
-    .tab-icon-wrap { font-size:22px; margin-bottom:3px; width:36px; height:36px; display:flex; align-items:center; justify-content:center; border-radius:10px; transition:background 0.2s; color:#C8A882; }
-    .tab-icon-wrap svg { width:22px; height:22px; }
-    .tab-icon-wrap.active { background:#F0E6D3; color:#6D4C41; }
+    .tab-icon-wrap { font-size:22px; margin-bottom:3px; width:36px; height:36px; display:flex; align-items:center; justify-content:center; border-radius:10px; transition:background 0.2s; }
+    .tab-icon-wrap.active { background:#F0E6D3; }
     .tab-label { font-size:10px; font-weight:500; color:#A1887F; }
     .tab-label.active { color:#6D4C41; font-weight:700; }
 
     /* 復盤 */
-    .seg-control { display:flex; background:#D7C4A8; border-radius:12px; padding:3px; margin-bottom:18px; overflow-x:auto; gap:3px; scrollbar-width:none; }
-    .seg-control::-webkit-scrollbar { display:none; }
-    .seg-btn { flex-shrink:0; border:none; background:none; border-radius:10px; padding:8px 12px; font-size:12px; font-weight:600; color:#A1887F; cursor:pointer; transition:all 0.2s; font-family:inherit; white-space:nowrap; }
+    .seg-control { display:flex; background:#D7C4A8; border-radius:12px; padding:3px; margin-bottom:18px; }
+    .seg-btn { flex:1; border:none; background:none; border-radius:10px; padding:8px 0; font-size:13px; font-weight:600; color:#A1887F; cursor:pointer; transition:all 0.2s; font-family:inherit; }
     .seg-btn.active { background:#fff; color:#3E2723; box-shadow:0 2px 8px rgba(109,76,65,0.15); }
     .prompt-q { font-size:14px; font-weight:600; color:#3E2723; margin-bottom:8px; }
     textarea { width:100%; min-height:80px; border:1.5px solid #D7C4A8; border-radius:12px; padding:12px 14px; font-size:14px; color:#3E2723; background:#fff; resize:none; outline:none; font-family:inherit; line-height:1.65; }
@@ -204,25 +202,6 @@
     .prompt-group { margin-bottom:16px; }
     .save-btn { width:100%; padding:14px 0; background:linear-gradient(135deg,#6D4C41,#A1887F); color:#fff; border:none; border-radius:14px; font-size:16px; font-weight:700; cursor:pointer; margin-top:4px; letter-spacing:0.8px; font-family:inherit; box-shadow:0 4px 14px rgba(109,76,65,0.35); }
     .save-btn:active { opacity:0.88; transform:scale(0.98); }
-
-    /* 早晨/夜晚復盤選擇卡 */
-    .review-time-selector { display:flex; gap:10px; margin-bottom:18px; }
-    .review-time-card {
-      flex:1; border:none; cursor:pointer; font-family:inherit; text-align:center;
-      background:#fff; border-radius:16px; padding:16px 10px;
-      box-shadow:0 2px 10px rgba(109,76,65,0.08);
-      border:2px solid #E8D5C0; transition:all 0.2s;
-    }
-    .review-time-card.active {
-      background:#8D6E63;
-      border-color:#8D6E63;
-      box-shadow:0 4px 14px rgba(109,76,65,0.2);
-    }
-    .rtc-icon { display:none; }
-    .rtc-label { font-size:15px; font-weight:800; color:#6D4C41; margin-bottom:4px; }
-    .rtc-sub { font-size:11.5px; color:#A1887F; font-weight:600; }
-    .review-time-card.active .rtc-label { color:#fff; }
-    .review-time-card.active .rtc-sub { color:rgba(255,245,235,0.75); }
 
     /* 歷史復盤 */
     .history-divider { display:flex; align-items:center; gap:10px; margin:22px 0 14px; }
@@ -244,164 +223,6 @@
     .check-item { display:flex; align-items:flex-start; gap:10px; padding:9px 0; font-size:13.5px; color:#6D4C41; border-bottom:1px solid #F0E6D3; line-height:1.55; }
     .check-item:last-child { border-bottom:none; }
     .check-dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; margin-top:6px; }
-    /* 等級卡片列 */
-    #levelCardList { padding: 14px 16px 24px; display: flex; flex-direction: column; gap: 12px; }
-    .level-card-btn {
-      width: 100%; border: none; cursor: pointer; font-family: inherit; text-align: left;
-      background: #fff; border-radius: 18px;
-      padding: 18px 20px;
-      display: flex; align-items: center; justify-content: space-between;
-      box-shadow: 0 2px 14px rgba(109,76,65,0.09);
-      transition: transform 0.15s, box-shadow 0.15s;
-    }
-    .level-card-btn:active { transform: scale(0.98); box-shadow: 0 1px 6px rgba(109,76,65,0.1); }
-    .level-card-left { display: flex; align-items: center; gap: 14px; }
-    .level-card-icon { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; padding: 8px; }
-    .level-card-icon svg { width: 100%; height: 100%; }
-    .level-card-title { font-size: 16px; font-weight: 800; color: #3E2723; margin-bottom: 3px; }
-    .level-card-sub { font-size: 12px; color: #A1887F; font-weight: 600; }
-    .level-card-arrow { font-size: 20px; color: #C8A882; }
-
-    /* 等級詳情 overlay 內容區可捲動 */
-    #levelDetailContent { flex: 1; overflow-y: auto; background: #F5EDE3; -webkit-overflow-scrolling: touch; }
-
-    /* 品牌詳情 Overlay */
-    .detail-overlay {
-      position: fixed; inset: 0; z-index: 999;
-      background: #F5EDE3;
-      display: flex; flex-direction: column;
-      transform: translateX(100%);
-      transition: transform 0.3s ease;
-    }
-    .detail-overlay.open { transform: translateX(0); }
-    #trafficDetailBody {
-      flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch;
-      background: #F5EDE3;
-    }
-    .detail-header {
-      display: flex; align-items: center; gap: 12px;
-      padding: max(env(safe-area-inset-top,0px) + 12px, 48px) 16px 14px;
-      background: #fff;
-      border-bottom: 1px solid #EDE0D4;
-      flex-shrink: 0;
-    }
-    .detail-back {
-      width: 34px; height: 34px; border-radius: 50%; background: #F0E6D3;
-      border: none; cursor: pointer; font-size: 18px;
-      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-      color: #6D4C41;
-    }
-    .detail-title { font-size: 16px; font-weight: 800; color: #3E2723; }
-    .detail-tabs { display: flex; background: #fff; border-bottom: 1px solid #F0E6D3; flex-shrink: 0; }
-    .detail-tab-btn {
-      flex: 1; border: none; background: none; cursor: pointer; font-family: inherit;
-      padding: 12px 0; font-size: 14px; font-weight: 700; color: #C8A882;
-      border-bottom: 3px solid transparent; transition: all 0.2s;
-    }
-    .detail-tab-btn.active { color: #6D4C41; border-bottom-color: #8D6E63; }
-    .detail-body { flex: 1; overflow-y: auto; padding: 18px 16px 32px; }
-    .detail-section { margin-bottom: 24px; }
-    .detail-section-title {
-      font-size: 15px; font-weight: 800; color: #3E2723;
-      margin-bottom: 10px; padding-bottom: 8px;
-      border-bottom: 2px solid #F0E6D3;
-      display: flex; align-items: center; gap: 8px;
-    }
-    .detail-section-title::before { content: ''; display: inline-block; width: 4px; height: 16px; background: #A1887F; border-radius: 3px; }
-    .detail-text { font-size: 14px; color: #5D4037; line-height: 1.85; white-space: pre-wrap; }
-    .detail-list { list-style: none; padding: 0; }
-    .detail-list li { font-size: 14px; color: #5D4037; padding: 7px 0; border-bottom: 1px solid #F5EDE7; line-height: 1.6; }
-    .detail-list li:last-child { border-bottom: none; }
-    .detail-coming { text-align: center; padding: 50px 20px; }
-    .detail-coming-icon { font-size: 40px; margin-bottom: 12px; }
-    .detail-coming-text { font-size: 13.5px; color: #A1887F; font-weight: 600; line-height: 1.6; }
-
-    /* TEAMWORK 四大核心卡片 */
-    .tw-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .tw-card { background: linear-gradient(150deg, #F5EDE3, #EDE0D4); border-radius: 14px; padding: 14px 12px; border-left: 3px solid #A1887F; }
-    .tw-keyword { font-size: 18px; font-weight: 900; color: #6D4C41; margin-bottom: 8px; letter-spacing: -0.5px; }
-    .tw-body { font-size: 12px; color: #795548; line-height: 1.7; }
-
-    /* 影片連結 */
-    .video-link { display: flex; align-items: center; gap: 14px; background: #fff; border-radius: 14px; padding: 14px 16px; text-decoration: none; box-shadow: 0 2px 10px rgba(109,76,65,0.08); border: 1.5px solid #EDE0D4; }
-    .video-thumb { width: 44px; height: 44px; background: linear-gradient(135deg,#6D4C41,#A1887F); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 18px; color: #fff; flex-shrink: 0; }
-    .video-info { flex: 1; }
-    .video-title { font-size: 14px; font-weight: 700; color: #3E2723; margin-bottom: 3px; }
-    .video-sub { font-size: 11.5px; color: #A1887F; font-weight: 600; }
-
-    /* 品牌核心區塊 */
-    .brand-block { background: #F5EDE3; border-radius: 14px; padding: 14px; margin-bottom: 12px; }
-    .brand-block-title { font-size: 13px; font-weight: 800; color: #6D4C41; margin-bottom: 10px; letter-spacing: 0.5px; }
-    .brand-win-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-    .brand-win-item { background: #fff; border-radius: 10px; padding: 10px; font-size: 12px; color: #5D4037; line-height: 1.5; display: flex; gap: 6px; align-items: flex-start; }
-    .brand-win-num { font-size: 14px; font-weight: 800; color: #A1887F; flex-shrink: 0; }
-    .brand-pillar { background: #fff; border-radius: 14px; padding: 14px; margin-bottom: 10px; box-shadow: 0 2px 8px rgba(109,76,65,0.07); border-left: 3px solid #C8A882; }
-    .brand-pillar-head { font-size: 13.5px; font-weight: 800; color: #6D4C41; margin-bottom: 7px; }
-    .brand-pillar-body { font-size: 13px; color: #5D4037; line-height: 1.75; white-space: pre-wrap; }
-
-    /* 粉絲成長紀錄 */
-    .fans-add-card { background:#fff; border-radius:18px; padding:18px 16px; box-shadow:0 2px 14px rgba(109,76,65,0.09); }
-    .fans-add-title { font-size:15px; font-weight:800; color:#3E2723; margin-bottom:4px; }
-    .fans-date-label { font-size:12px; color:#A1887F; font-weight:600; margin-bottom:14px; }
-    .fans-platform-list { display:flex; flex-direction:column; gap:0; }
-    .fans-platform-row { display:flex; align-items:center; justify-content:space-between; padding:11px 0; border-bottom:1px solid #F5EDE7; }
-    .fans-platform-row:last-child { border-bottom:none; }
-    .fans-platform-info { display:flex; align-items:center; gap:10px; }
-    .fans-platform-icon { width:34px; height:34px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:800; color:#fff; flex-shrink:0; }
-    .ig-icon { background:linear-gradient(135deg,#C8A882,#A1887F); }
-    .fb-icon { background:#8D6E63; }
-    .tk-icon { background:#6D4C41; }
-    .xhs-icon { background:#795548; font-size:9px; }
-    .th-icon { background:#5D4037; }
-    .fans-platform-name { font-size:14px; font-weight:700; color:#3E2723; }
-    .fans-input { width:110px; border:1.5px solid #D7C4A8; border-radius:10px; padding:8px 12px; font-size:14px; color:#3E2723; background:#FAF6F0; outline:none; font-family:inherit; text-align:right; }
-    .fans-input:focus { border-color:#A1887F; }
-    .fans-history-card { background:#fff; border-radius:16px; padding:14px 16px; margin-bottom:10px; box-shadow:0 2px 10px rgba(109,76,65,0.08); }
-    .fans-history-date { font-size:11px; font-weight:800; color:#A1887F; margin-bottom:10px; display:flex; align-items:center; gap:6px; }
-    .fans-history-row { display:flex; justify-content:space-between; align-items:center; padding:7px 0; border-bottom:1px solid #F5EDE7; }
-    .fans-history-row:last-child { border-bottom:none; }
-    .fans-history-platform { display:flex; align-items:center; gap:8px; font-size:13px; color:#5D4037; font-weight:600; }
-    .fans-history-num { font-size:15px; font-weight:800; color:#6D4C41; }
-    .fans-history-diff { font-size:11px; font-weight:700; margin-left:4px; }
-    .fans-diff-up { color:#8D6E63; }
-    .fans-diff-down { color:#C62828; }
-
-    /* 升級步驟 */
-    .upgrade-steps { display: flex; flex-direction: column; gap: 0; background: #fff; border-radius: 16px; padding: 4px 16px; box-shadow: 0 2px 12px rgba(109,76,65,0.09); margin-bottom: 12px; }
-    .upgrade-step { display: flex; align-items: flex-start; gap: 12px; padding: 11px 0; border-bottom: 1px solid #F5EDE7; }
-    .upgrade-step:last-child { border-bottom: none; }
-    .upgrade-num { font-size: 18px; flex-shrink: 0; line-height: 1.4; }
-    .upgrade-text { font-size: 13.5px; color: #5D4037; line-height: 1.65; padding-top: 2px; }
-    .upgrade-video-tag { font-size: 12px; font-weight: 700; color: #A1887F; background: #F5EDE3; border-radius: 8px; padding: 7px 12px; margin: 4px 0; text-align: center; }
-    .upgrade-tip-card { background: linear-gradient(135deg, #F5EDE3, #EDE0D4); border-radius: 16px; padding: 18px 16px; border-left: 4px solid #A1887F; }
-    .upgrade-tip-icon { font-size: 20px; margin-bottom: 10px; }
-    .upgrade-tip-body { font-size: 13.5px; color: #5D4037; line-height: 1.8; white-space: pre-wrap; }
-
-    /* 婕樂纖階級表卡片 */
-    .level-table-card { background: #fff; border-radius: 16px; padding: 18px 16px; box-shadow: 0 2px 12px rgba(109,76,65,0.09); }
-    .level-table-title { font-size: 17px; font-weight: 900; color: #3E2723; text-align: center; margin-bottom: 3px; }
-    .level-table-sub { font-size: 10px; font-weight: 700; color: #C8A882; text-align: center; letter-spacing: 2px; margin-bottom: 20px; }
-    .level-steps { display: flex; flex-direction: column; gap: 0; }
-    .level-step { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid #F5EDE7; }
-    .level-step:last-child { border-bottom: none; }
-    .level-badge { color: #fff; font-size: 13px; font-weight: 800; padding: 6px 14px; border-radius: 20px; flex-shrink: 0; min-width: 90px; text-align: center; }
-    .level-name { font-size: 14px; font-weight: 700; color: #3E2723; flex: 1; }
-    .level-note { font-size: 11px; color: #A1887F; font-weight: 600; flex-shrink: 0; }
-    .level-arrow { text-align: center; font-size: 18px; color: #D7C4A8; padding: 0 0 0 4px; display: none; }
-
-    /* 社群連結列表 */
-    .social-list { display: flex; flex-direction: column; gap: 8px; }
-    .social-item { display: flex; align-items: center; gap: 12px; background: #fff; border-radius: 14px; padding: 13px 16px; text-decoration: none; box-shadow: 0 2px 8px rgba(109,76,65,0.07); }
-    .social-icon { font-size: 20px; flex-shrink: 0; }
-    .social-info { flex: 1; }
-    .social-name { font-size: 13.5px; font-weight: 700; color: #3E2723; margin-bottom: 2px; }
-    .social-url { font-size: 11.5px; color: #A1887F; }
-    .social-arrow { font-size: 18px; color: #C8A882; flex-shrink: 0; }
-    /* 讓學習路徑項目有可點進去的箭頭 */
-    .phase-item-link { display: flex; align-items: center; gap: 12px; padding: 11px 4px; border-top: 1px solid #F5EDE7; cursor: pointer; }
-    .phase-item-link .phase-item-text { flex: 1; }
-    .phase-item-link .link-arrow { font-size: 13px; color: #C8A882; flex-shrink: 0; }
-
     .hidden { display:none; }
   </style>
 </head>
@@ -433,28 +254,31 @@
     </div>
   </div>
 
-  <!-- 等級詳情 Overlay -->
-  <div class="detail-overlay" id="levelDetailOverlay">
-    <div class="detail-header">
-      <button class="detail-back" onclick="closeLevelOverlay()">←</button>
-      <div class="detail-title" id="levelDetailTitle"></div>
-    </div>
-    <div class="sub-tab-row" id="subTabRow">
-      <button class="sub-tab-btn active" data-sub="learn" onclick="switchSubTab('learn',this)">學習</button>
-      <button class="sub-tab-btn" data-sub="daily" onclick="switchSubTab('daily',this)">每日</button>
-      <button class="sub-tab-btn" data-sub="checklist" onclick="switchSubTab('checklist',this)">檢核表</button>
-      <button class="sub-tab-btn" data-sub="me" onclick="switchSubTab('me',this)">里程碑</button>
-    </div>
-    <div id="levelDetailContent">
+  <!-- 等級切換 -->
+  <div id="levelStrip">
+    <div id="levelStripInner"></div>
+  </div>
 
-      <!-- 敬請期待 -->
-      <div id="comingSoon" class="coming-soon hidden" style="padding:60px 20px;">
+  <!-- 子分頁（學習/每日/我的） -->
+  <div id="subTabRow" class="sub-tab-row">
+    <button class="sub-tab-btn active" data-sub="learn" onclick="switchSubTab('learn',this)">學習</button>
+    <button class="sub-tab-btn" data-sub="daily" onclick="switchSubTab('daily',this)">每日</button>
+    <button class="sub-tab-btn" data-sub="checklist" onclick="switchSubTab('checklist',this)">檢核表</button>
+    <button class="sub-tab-btn" data-sub="me" onclick="switchSubTab('me',this)">里程碑</button>
+  </div>
+
+  <div id="content">
+    <!-- 首頁 -->
+    <div id="tab-home" class="tab-content">
+
+      <!-- 敬請期待（二級以上）-->
+      <div id="comingSoon" class="coming-soon hidden">
         <div class="coming-soon-icon">🔒</div>
         <div class="coming-soon-text">這個等級的內容還在準備中<br>敬請期待！</div>
       </div>
 
       <!-- 學習 -->
-      <div id="sub-learn" class="sub-tab-content tab-content">
+      <div id="sub-learn" class="sub-tab-content">
         <div class="learn-intro">
           <div class="learn-intro-title" id="learnPathTitle">新夥伴學習路徑</div>
           <div class="learn-intro-desc">完成每個任務，解鎖下一階段</div>
@@ -463,7 +287,7 @@
       </div>
 
       <!-- 每日 -->
-      <div id="sub-daily" class="sub-tab-content tab-content hidden">
+      <div id="sub-daily" class="sub-tab-content hidden">
         <div class="day-strip-wrap">
           <div class="day-strip-label">📅 點選查看 Day 1-90 的紀錄</div>
           <div id="dailyDayStrip"></div>
@@ -524,466 +348,54 @@
         <div class="me-stats-card" id="meStatsCard"></div>
       </div>
     </div>
-  </div>
-
-  <div id="content">
-    <!-- 首頁 -->
-    <div id="tab-home" class="tab-content">
-      <!-- 等級卡片列 -->
-      <div id="levelCardList"></div>
-    </div>
 
     <!-- 復盤 -->
     <div id="tab-review" class="tab-content hidden">
-      <div id="reviewCardList" style="padding:16px;display:flex;flex-direction:column;gap:12px;"></div>
+      <div class="seg-control">
+        <button class="seg-btn active" onclick="switchReview('日復盤',this)">日復盤</button>
+        <button class="seg-btn" onclick="switchReview('週復盤',this)">週復盤</button>
+        <button class="seg-btn" onclick="switchReview('月復盤',this)">月復盤</button>
+      </div>
+      <div id="reviewQuestions"></div>
+      <button class="save-btn" onclick="saveReview()">☕ 儲存復盤</button>
+      <div class="history-divider">
+        <div class="history-divider-line"></div>
+        <div class="history-divider-text">📖 過去的復盤記錄</div>
+        <div class="history-divider-line"></div>
+      </div>
+      <div id="reviewHistory"></div>
     </div>
 
-    <!-- 復盤詳情 Overlay -->
-    <div class="detail-overlay" id="reviewDetailOverlay">
-      <div class="detail-header">
-        <button class="detail-back" onclick="closeReviewOverlay()">←</button>
-        <div class="detail-title" id="reviewDetailTitle"></div>
-      </div>
-      <div id="reviewDetailBody" style="flex:1;overflow-y:auto;background:#F5EDE3;padding:14px 16px 24px;">
-        <!-- 每日復盤：晨之六問 / 夜之四問 -->
-        <div id="reviewDailySection">
-          <div class="review-time-selector">
-            <button class="review-time-card active" id="btn-morning" onclick="switchReview('晨之六問',this,'btn-morning','btn-night')">
-              <div class="rtc-icon">🌅</div>
-              <div class="rtc-label">早晨六問</div>
-              <div class="rtc-sub">啟動美好的一天</div>
-            </button>
-            <button class="review-time-card" id="btn-night" onclick="switchReview('夜之四問',this,'btn-night','btn-morning')">
-              <div class="rtc-icon">🌙</div>
-              <div class="rtc-label">夜晚四問</div>
-              <div class="rtc-sub">沉澱今日的收穫</div>
-            </button>
-          </div>
-          <div id="reviewQuestions"></div>
-          <button class="save-btn" onclick="saveReview()">☕ 儲存復盤</button>
-          <div class="history-divider">
-            <div class="history-divider-line"></div>
-            <div class="history-divider-text">📖 過去的復盤記錄</div>
-            <div class="history-divider-line"></div>
-          </div>
-          <div id="reviewHistory"></div>
-        </div>
-        <!-- 每週/每月復盤 -->
-        <div id="reviewOtherSection" class="hidden">
-          <div id="reviewQuestionsOther"></div>
-          <button class="save-btn" onclick="saveReviewOther()">☕ 儲存復盤</button>
-          <div class="history-divider">
-            <div class="history-divider-line"></div>
-            <div class="history-divider-text">📖 過去的復盤記錄</div>
-            <div class="history-divider-line"></div>
-          </div>
-          <div id="reviewHistoryOther"></div>
-        </div>
-      </div>
+    <div id="tab-presale" class="tab-content hidden">
+      <div class="sale-header" style="color:#8D6E63">🎯 售前 SOP</div>
+      <div id="presale-body"></div>
     </div>
-
-    <div id="tab-story" class="tab-content hidden">
-      <div class="coming-soon" style="padding:60px 20px;">
-        <div class="coming-soon-icon">📱</div>
-        <div class="coming-soon-text">限動內容即將上線<br>敬請期待！</div>
-      </div>
+    <div id="tab-insale" class="tab-content hidden">
+      <div class="sale-header" style="color:#795548">💼 售中 SOP</div>
+      <div id="insale-body"></div>
     </div>
-
-    <div id="tab-traffic" class="tab-content hidden">
-      <div id="trafficCardList" style="padding:16px;display:flex;flex-direction:column;gap:12px;"></div>
-    </div>
-
-    <!-- 引流詳情 Overlay -->
-    <div id="tab-qa" class="tab-content hidden">
-      <div class="coming-soon" style="padding:60px 20px;">
-        <div class="coming-soon-icon">💬</div>
-        <div class="coming-soon-text">QA 內容即將上線<br>敬請期待！</div>
-      </div>
+    <div id="tab-aftersale" class="tab-content hidden">
+      <div class="sale-header" style="color:#6D4C41">🌟 售後 SOP</div>
+      <div id="aftersale-body"></div>
     </div>
   </div>
 
   <div id="tabbar">
     <button class="tab-btn" onclick="switchTab('home',this)">
-      <div class="tab-icon-wrap active">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/>
-          <path d="M9 21V12h6v9"/>
-        </svg>
-      </div>
-      <span class="tab-label active">首頁</span>
-    </button>
-    <button class="tab-btn" onclick="switchTab('story',this)">
-      <div class="tab-icon-wrap">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="5" y="2" width="14" height="20" rx="3"/>
-          <circle cx="12" cy="17" r="1.2" fill="currentColor" stroke="none"/>
-          <path d="M9 7h6M9 11h4"/>
-        </svg>
-      </div>
-      <span class="tab-label">限動</span>
-    </button>
-    <button class="tab-btn" onclick="switchTab('traffic',this)">
-      <div class="tab-icon-wrap">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 20V10"/>
-          <path d="M18 20V4"/>
-          <path d="M6 20v-4"/>
-          <path d="M15 7l3-3 3 3"/>
-        </svg>
-      </div>
-      <span class="tab-label">引流</span>
+      <div class="tab-icon-wrap active">🏠</div><span class="tab-label active">首頁</span>
     </button>
     <button class="tab-btn" onclick="switchTab('review',this)">
-      <div class="tab-icon-wrap">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 2a10 10 0 100 20A10 10 0 0012 2z"/>
-          <path d="M12 6v6l4 2"/>
-        </svg>
-      </div>
-      <span class="tab-label">復盤</span>
+      <div class="tab-icon-wrap">📊</div><span class="tab-label">復盤</span>
     </button>
-    <button class="tab-btn" onclick="switchTab('qa',this)">
-      <div class="tab-icon-wrap">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
-          <path d="M9.5 9.5C9.5 8.1 10.6 7 12 7s2.5 1.1 2.5 2.5c0 1.5-1.5 2-2.5 2.5"/>
-          <circle cx="12" cy="15" r="0.8" fill="currentColor" stroke="none"/>
-        </svg>
-      </div>
-      <span class="tab-label">QA</span>
+    <button class="tab-btn" onclick="switchTab('presale',this)">
+      <div class="tab-icon-wrap">🎯</div><span class="tab-label">售前</span>
     </button>
-  </div>
-
-  <!-- 品牌詳情 Overlay -->
-  <!-- 婕樂纖品牌 Overlay -->
-  <div class="detail-overlay" id="detailOverlayBrand">
-    <div class="detail-header">
-      <button class="detail-back" onclick="closeDetailOverlay()">←</button>
-      <div class="detail-title">婕樂纖品牌</div>
-    </div>
-    <div class="detail-body">
-      <!-- 婕樂纖品牌 -->
-      <div id="detail-brand">
-
-        <div class="detail-section">
-          <div class="detail-section-title">認識婕樂纖</div>
-          <a class="video-link" href="https://youtu.be/NLK1Q6YXr0k?feature=shared" target="_blank">
-            <div class="video-thumb">▶</div>
-            <div class="video-info">
-              <div class="video-title">認識婕樂纖</div>
-              <div class="video-sub">點擊觀看影片 → YouTube</div>
-            </div>
-          </a>
-        </div>
-
-        <div class="detail-section">
-          <div class="detail-section-title">老闆創業專訪</div>
-          <a class="video-link" href="https://youtu.be/s3tdlYPORy8?si=Wh6lgZWcXhzmPW7X" target="_blank">
-            <div class="video-thumb">▶</div>
-            <div class="video-info">
-              <div class="video-title">老闆創業專訪</div>
-              <div class="video-sub">點擊觀看影片 → YouTube</div>
-            </div>
-          </a>
-        </div>
-
-        <div class="detail-section">
-          <div class="detail-section-title">核心價值及四贏理念</div>
-          <div class="detail-text" style="margin-bottom:14px;">婕樂纖秉持「成長、創新、永續」的經營理念，致力於提供消費者優良、安心、安全的保健產品。</div>
-          <div class="brand-block">
-            <div class="brand-block-title">四贏理念</div>
-            <div class="brand-win-grid">
-              <div class="brand-win-item"><span class="brand-win-num">①</span>給消費者高品質產品與滿意的服務</div>
-              <div class="brand-win-item"><span class="brand-win-num">②</span>給加盟夥伴最強資源讓夥伴事業成功</div>
-              <div class="brand-win-item"><span class="brand-win-num">③</span>一流的生技企業與品牌</div>
-              <div class="brand-win-item"><span class="brand-win-num">④</span>回饋社會</div>
-            </div>
-          </div>
-          <div class="brand-pillar">
-            <div class="brand-pillar-head">🔬 品質與安全</div>
-            <div class="brand-pillar-body">產品由國內多位營養師共同策劃，選用頂級、安全、重視環境生態及產地農工權益的原料進行生產製作，並通過 SGS 檢驗及第三方公正單位認證，確保產品品質。</div>
-          </div>
-          <div class="brand-pillar">
-            <div class="brand-pillar-head">💡 創新研發</div>
-            <div class="brand-pillar-body">堅持以臨床實驗及各國專利成分為基礎，透過三階段過程以及實測確認效果，持續優化產品品質，滿足市場需求。</div>
-          </div>
-          <div class="brand-pillar">
-            <div class="brand-pillar-head">🤝 社會責任</div>
-            <div class="brand-pillar-body">秉持「取之於社會，回饋於社會」的理念，不定期捐款予家扶中心、勵馨基金會及仁友愛心家園，期望透過企業能量幫助更多需要幫助的人。</div>
-          </div>
-        </div>
-
-        <div class="detail-section">
-          <div class="detail-section-title">婕樂纖相關官方社群</div>
-          <div class="social-list">
-            <a class="social-item" href="https://jerosse.com.tw/product-category/healthy-vitality-series/" target="_blank">
-              <span class="social-icon">🌐</span>
-              <div class="social-info"><div class="social-name">婕樂纖官方網站</div><div class="social-url">jerosse.com.tw</div></div>
-              <span class="social-arrow">›</span>
-            </a>
-            <a class="social-item" href="https://www.instagram.com/jerossetw_?igsh=MWV5ZDIycG10bHA5cg==" target="_blank">
-              <span class="social-icon">📷</span>
-              <div class="social-info"><div class="social-name">婕樂纖官方 Instagram</div><div class="social-url">@jerossetw_</div></div>
-              <span class="social-arrow">›</span>
-            </a>
-            <a class="social-item" href="https://www.tiktok.com/@jerosse_dietitians?_t=ZS-8tdad8gSRL6&_r=1" target="_blank">
-              <span class="social-icon">🎵</span>
-              <div class="social-info"><div class="social-name">營養師321 抖音</div><div class="social-url">@jerosse_dietitians</div></div>
-              <span class="social-arrow">›</span>
-            </a>
-            <a class="social-item" href="https://www.instagram.com/kevinlu0421?igsh=MWJ4OW9obGt5aWk5cg==" target="_blank">
-              <span class="social-icon">📷</span>
-              <div class="social-info"><div class="social-name">KEVIN 老闆 Instagram</div><div class="social-url">@kevinlu0421</div></div>
-              <span class="social-arrow">›</span>
-            </a>
-            <a class="social-item" href="https://www.tiktok.com/@kevinlu0421?_t=ZS-8tdaUjaJmVz&_r=1" target="_blank">
-              <span class="social-icon">🎵</span>
-              <div class="social-info"><div class="social-name">KEVIN 老闆 TikTok</div><div class="social-url">@kevinlu0421</div></div>
-              <span class="social-arrow">›</span>
-            </a>
-            <a class="social-item" href="https://youtube.com/@jerosse549?si=vgcXBpHPlpGtpKqW" target="_blank">
-              <span class="social-icon">▶️</span>
-              <div class="social-info"><div class="social-name">婕樂纖 YouTube</div><div class="social-url">@jerosse549</div></div>
-              <span class="social-arrow">›</span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- MORE 團隊 Overlay -->
-  <div class="detail-overlay" id="detailOverlayMore">
-    <div class="detail-header">
-      <button class="detail-back" onclick="closeDetailOverlay()">←</button>
-      <div class="detail-title">MORE 團隊</div>
-    </div>
-    <div class="detail-body">
-      <div id="detail-more">
-
-        <!-- TEAMWORK 四大核心 -->
-        <div class="detail-section">
-          <div class="detail-section-title">TEAMWORK 核心價值</div>
-          <div class="brand-win-grid">
-            <div class="brand-pillar" style="margin-bottom:0">
-              <div class="brand-pillar-head">🌸 歡樂。</div>
-              <div class="brand-pillar-body">代表著團隊的能量。希望來到團隊的每位夥伴都能開心、自在，把這裡當成「自己的家」</div>
-            </div>
-            <div class="brand-pillar" style="margin-bottom:0">
-              <div class="brand-pillar-head">🤝 互助。</div>
-              <div class="brand-pillar-body">代表著「我們的連結」。我們沒有學長姐制、更沒有階級競爭，我們倡導「一起變厲害」。</div>
-            </div>
-            <div class="brand-pillar" style="margin-bottom:0">
-              <div class="brand-pillar-head">🙏 感恩。</div>
-              <div class="brand-pillar-body">感謝那些曾經教導、陪伴、提攜我們的人，把這份感謝放在心裡，也放進行動裡。</div>
-            </div>
-            <div class="brand-pillar" style="margin-bottom:0">
-              <div class="brand-pillar-head">🔑 傳承。</div>
-              <div class="brand-pillar-body">我們把所學、所信、所愛，一點一滴傳下去。不只是技巧，而是信念與文化。</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- MORE 寓意 -->
-        <div class="detail-section">
-          <div class="detail-section-title">MORE 寓意</div>
-          <div class="brand-pillar">
-            <div class="brand-pillar-head">✨ 不設限自己的能力、也不將就於現在</div>
-            <div class="brand-pillar-body">MORE 這個詞翻譯成中文有著「更多」的意思，但對團隊來說卻有著更深的含義。
-
-很多加入團隊的夥伴曾經是習慣默默做好份內工作的上班族，亦或者是身處在家照顧孩子的寶媽，不習慣為自己多想、也不敢期待太多，但突然某個瞬間驚覺到，人生其實值得有「更多」的選擇。
-
-於是，MORE 的成立宗旨是
-「不設限自己的能力、也不將就於現在」
-
-每個人都可以擁有更多的選擇、更多的自由時間，甚至是實現夢想的機會 .ᐟ</div>
-          </div>
-        </div>
-
-        <!-- MORE 團隊目標 -->
-        <div class="detail-section">
-          <div class="detail-section-title">MORE 團隊目標</div>
-          <div class="brand-block">
-            <div class="brand-win-grid" style="grid-template-columns:1fr;">
-              <div class="brand-win-item">♡ 盡所能讓每一位使用產品的客人，都能解決他的問題</div>
-              <div class="brand-win-item">♡ 用「真實經歷」分享，不用商業話術說服他人</div>
-              <div class="brand-win-item">♡ 幫助更多人透過自媒體，打造屬於自己的一份收入</div>
-              <div class="brand-win-item">♡ 從被動變成主動選擇人生</div>
-              <div class="brand-win-item">♡ 用這份事業實現自由、陪伴家人、完成夢想</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 團隊活動 & 年度獎勵 -->
-        <div class="detail-section">
-          <div class="detail-section-title">團隊活動 & 年度獎勵</div>
-          <div class="brand-win-grid">
-            <div class="brand-pillar" style="margin-bottom:0">
-              <div class="brand-pillar-head">🎉 團隊活動</div>
-              <div class="brand-pillar-body">· 每年度團隊獎勵旅遊
-· 每年度金MORE獎頒發
-· 不定時線下聚會</div>
-            </div>
-            <div class="brand-pillar" style="margin-bottom:0">
-              <div class="brand-pillar-head">🏆 年度獎勵</div>
-              <div class="brand-pillar-body">· 年度獎金
-· 團隊旅遊</div>
-            </div>
-          </div>
-        </div>
-
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 升級及退出加盟 Overlay -->
-  <div class="detail-overlay" id="detailOverlayUpgrade">
-    <div class="detail-header">
-      <button class="detail-back" onclick="closeDetailOverlay()">←</button>
-      <div class="detail-title">升級及退出加盟相關須知</div>
-    </div>
-    <div class="detail-body">
-      <!-- 婕樂纖階級表 -->
-      <div class="detail-section">
-        <div class="detail-section-title">婕樂纖階級表</div>
-        <div class="level-table-card">
-          <div class="level-table-title">婕樂纖階級表</div>
-          <div class="level-table-sub">LEVEL TABLE OF JEROSSE</div>
-          <div class="level-steps">
-            <div class="level-step">
-              <div class="level-badge" style="background:#A1887F">$6,800</div>
-              <div class="level-name">實習加盟</div>
-              <div class="level-note"></div>
-            </div>
-            <div class="level-step">
-              <div class="level-badge" style="background:#8D6E63">$19,800</div>
-              <div class="level-name">三級零售加盟</div>
-              <div class="level-note"></div>
-            </div>
-            <div class="level-step">
-              <div class="level-badge" style="background:#795548">$0</div>
-              <div class="level-name">三級輔導督導</div>
-              <div class="level-note">需考核</div>
-            </div>
-            <div class="level-step">
-              <div class="level-badge" style="background:#6D4C41">$50,000</div>
-              <div class="level-name">二級輔導督導</div>
-              <div class="level-note"></div>
-            </div>
-            <div class="level-step">
-              <div class="level-badge" style="background:#5D4037">$150,000</div>
-              <div class="level-name">一級輔導督導</div>
-              <div class="level-note">需考核</div>
-            </div>
-            <div class="level-step">
-              <div class="level-badge" style="background:#4E342E">$350,000</div>
-              <div class="level-name">皇家督導輔導</div>
-              <div class="level-note">需考核</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 升級制度說明影片 -->
-      <div class="detail-section">
-        <div class="detail-section-title">升級制度相關說明</div>
-        <a class="video-link" href="https://youtu.be/I4PuFPXcp9s?feature=shared" target="_blank">
-          <div class="video-thumb">▶</div>
-          <div class="video-info">
-            <div class="video-title">升級制度相關說明</div>
-            <div class="video-sub">點擊觀看影片 → YouTube</div>
-          </div>
-        </a>
-      </div>
-
-      <!-- 實習升三級步驟 -->
-      <div class="detail-section">
-        <div class="detail-section-title">實習升三級｜相關步驟流程</div>
-        <div class="upgrade-steps">
-          <div class="upgrade-step">
-            <div class="upgrade-num">➊</div>
-            <div class="upgrade-text">選好 $19,800 以上的全產品，匯款並截圖給上家</div>
-          </div>
-          <div class="upgrade-step">
-            <div class="upgrade-num">➋</div>
-            <div class="upgrade-text">點選「婕樂纖加盟商營運系統 APP」</div>
-          </div>
-          <div class="upgrade-step">
-            <div class="upgrade-num">➌</div>
-            <div class="upgrade-text">（右下角）我的資料 → 升級／降級／退出加盟</div>
-          </div>
-          <div class="upgrade-step">
-            <div class="upgrade-num">➍</div>
-            <div class="upgrade-text">我要升級 ▶ 我要升級申請 → 放上 $19,800 匯款截圖</div>
-          </div>
-          <div class="upgrade-step">
-            <div class="upgrade-num">➎</div>
-            <div class="upgrade-text">即完成升級申請</div>
-          </div>
-          <div class="upgrade-step">
-            <div class="upgrade-num">➏</div>
-            <div class="upgrade-text">儲值 SP 點數（請點以下教學 ⬇️）</div>
-          </div>
-          <div class="upgrade-video-tag">雲倉APP｜運費點數儲值方式</div>
-          <a class="video-link" href="https://youtube.com/shorts/gKksUuw9BC0?si=G1lQVMohiL4gLxmR" target="_blank" style="margin-top:4px;">
-            <div class="video-thumb">▶</div>
-            <div class="video-info">
-              <div class="video-title">雲倉APP｜運費點數儲值方式</div>
-              <div class="video-sub">點擊觀看影片 → YouTube</div>
-            </div>
-          </a>
-          <div class="upgrade-step">
-            <div class="upgrade-num">➐</div>
-            <div class="upgrade-text">待公司審核升級申請後，點選雲倉 → 向上家叫貨</div>
-          </div>
-          <div class="upgrade-step">
-            <div class="upgrade-num">➑</div>
-            <div class="upgrade-text">加入購物車並點選「確認叫貨」</div>
-          </div>
-          <div class="upgrade-step">
-            <div class="upgrade-num">➒</div>
-            <div class="upgrade-text">附上匯款截圖即可送出，並等待上家審核</div>
-          </div>
-          <div class="upgrade-step">
-            <div class="upgrade-num">➓</div>
-            <div class="upgrade-text">上家審核完成後，產品即刻會匯入您的系統</div>
-          </div>
-          <div class="upgrade-video-tag">如何叫貨 & 提領的教學 ⬇️</div>
-          <a class="video-link" href="https://youtube.com/shorts/FyLErZE6DBc?si=zc91JNsTA727O4AX" target="_blank" style="margin-top:4px;">
-            <div class="video-thumb">▶</div>
-            <div class="video-info">
-              <div class="video-title">三級零售加盟商｜叫貨 & 提領教學</div>
-              <div class="video-sub">點擊觀看影片 → YouTube</div>
-            </div>
-          </a>
-        </div>
-      </div>
-
-      <!-- 營運小秘訣 -->
-      <div class="detail-section">
-        <div class="detail-section-title">三級零售加盟商｜營運小秘訣</div>
-        <div class="upgrade-tip-card">
-          <div class="upgrade-tip-icon">𖤐</div>
-          <div class="upgrade-tip-body">建議三級零售加盟的夥伴，可以去考「三級輔導督導」！
-
-不僅成本更低！補貨門檻不變！重點是完全不需要再拿 $19,800 升級，更重要的是能讓喜歡產品的客人直接加盟成 VVIP（實習加盟）！
-
-完全好處多多享升級 🤩
-更能學習如何成為一位領導人 ✨</div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- 引流詳情 Overlay -->
-  <div class="detail-overlay" id="trafficDetailOverlay">
-    <div class="detail-header" style="flex-shrink:0;">
-      <button class="detail-back" onclick="closeTrafficOverlay()">←</button>
-      <div class="detail-title" id="trafficDetailTitle"></div>
-    </div>
-    <div id="trafficDetailBody" style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;background:#F5EDE3;"></div>
+    <button class="tab-btn" onclick="switchTab('insale',this)">
+      <div class="tab-icon-wrap">💼</div><span class="tab-label">售中</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('aftersale',this)">
+      <div class="tab-icon-wrap">🌟</div><span class="tab-label">售後</span>
+    </button>
   </div>
 </div>
 
@@ -1013,7 +425,6 @@ const LEARNING_PATH = {
       items: [
         '認識公司背景與品牌故事',
         '了解團隊文化與核心價值',
-        '升級及退出加盟相關須知',
         '開始使用產品，記錄第一週體感日記',
         '閱讀產品成份說明與功效',
         '完成產品知識小測驗（自我評估）',
@@ -1149,30 +560,9 @@ const CHECKLIST = {
 };
 
 const reviewPrompts = {
-  '晨之六問': [
-    '我要如何把婕樂纖事業經營得更好？',
-    '我要新增幾位潛在客戶、成交幾位客戶、服務幾位客戶？幫助多少人改善生活品質？',
-    '我要培訓多少加盟夥伴、哪些加盟夥伴？（團隊長：我該如何優化我的團隊培訓課程或系統）',
-    '我要解決什麼問題，並且帶給我成長？',
-    '我能創造什麼價值，並且帶給我快樂？',
-    '哪一件事情是能幫助我的婕樂纖事業做得更好，而且我一定要完成？',
-  ],
-  '夜之四問': [
-    '我做了哪些付出，發幾篇動態、談幾個客戶、成交幾單？',
-    '我學到、優化了什麼？上了什麼培訓、看了什麼書、練了什麼技能？',
-    '我創造了什麼價值？服務幾位客人好口碑？培訓幾位加盟？幫他們解決什麼問題？',
-    '我一整天的表現可以如何做得更好？如何更善用時間？是否跟客戶的對話可以更精進？',
-  ],
-  '週復盤': [
-    '本週最大的收穫是？',
-    '哪個環節可以做得更好？',
-    '下週想突破的一件事？',
-  ],
-  '月復盤': [
-    '本月目標達成了幾%？',
-    '客戶/同事給你什麼反饋？',
-    '對下個月的期待是？',
-  ],
+  '日復盤':['今天完成了哪些任務？','遇到什麼困難？如何解決？','明天的優先事項是？'],
+  '週復盤':['本週最大的收穫是？','哪個環節可以做得更好？','下週想突破的一件事？'],
+  '月復盤':['本月目標達成了幾%？','客戶/同事給你什麼反饋？','對下個月的期待是？'],
 };
 
 const saleData = {
@@ -1199,7 +589,7 @@ const phases = [
   { name:'獨立期', range:[61,90] },
 ];
 
-let startDate, todayNum, currentPhase, reviewTab = '晨之六問';
+let startDate, todayNum, currentPhase, reviewTab = '日復盤';
 let currentLevel = 'newbie';
 let currentSub = 'learn';
 let phaseOpenIdx = null;
@@ -1282,107 +672,21 @@ function init() {
     : todayNum <= 60 ? '量變帶來質變，每天進步 1%。'
     : '你已經是核心成員，相信自己！';
 
-  buildLevelCards();
-  buildReviewCards();
-  buildTrafficCards();
+  buildLevelStrip();
+  renderLevelView();
+  renderSaleTabs();
   renderReview();
 }
 
-// 等級卡片設定（SVG插畫、副標題、背景色）
-const LEVEL_META = {
-  newbie: { bg:'#F3EBE5', sub:'新夥伴入門培訓',
-    svg:`<svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <!-- 小嫩芽 -->
-      <ellipse cx="22" cy="35" rx="10" ry="3.5" fill="#D7C4A8" opacity="0.5"/>
-      <rect x="20.5" y="20" width="3" height="15" rx="1.5" fill="#A1887F"/>
-      <ellipse cx="22" cy="18" rx="8" ry="9" fill="#C8A882"/>
-      <ellipse cx="19" cy="15" rx="4.5" ry="5.5" fill="#D4B896"/>
-      <ellipse cx="25" cy="16" rx="3.5" ry="4" fill="#BFA080" opacity="0.7"/>
-      <ellipse cx="22" cy="12" rx="3" ry="3.5" fill="#E8D4BC"/>
-    </svg>`
-  },
-  lv3: { bg:'#EDE8E3', sub:'三級輔導督導培訓',
-    svg:`<svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <!-- 小星星徽章 -->
-      <circle cx="22" cy="22" r="14" fill="#E8D5C0"/>
-      <circle cx="22" cy="22" r="11" fill="#C8A882"/>
-      <path d="M22 12 L24.5 19.5 L32 19.5 L26 24 L28.5 31.5 L22 27 L15.5 31.5 L18 24 L12 19.5 L19.5 19.5 Z" fill="#fff" opacity="0.9"/>
-      <circle cx="22" cy="22" r="4" fill="#A1887F"/>
-    </svg>`
-  },
-  lv2: { bg:'#EAE3DC', sub:'二級輔導督導培訓',
-    svg:`<svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <!-- 雙星 -->
-      <circle cx="22" cy="22" r="14" fill="#DDD0C4"/>
-      <circle cx="22" cy="22" r="11" fill="#A1887F"/>
-      <path d="M22 13 L24 19 L30 19 L25 23 L27 29 L22 25 L17 29 L19 23 L14 19 L20 19 Z" fill="#F0E6D3"/>
-      <circle cx="29" cy="13" r="4" fill="#C8A882"/>
-      <path d="M29 9.5 L30 12 L32.5 12 L30.5 13.5 L31.5 16 L29 14.5 L26.5 16 L27.5 13.5 L25.5 12 L28 12 Z" fill="#fff" opacity="0.9"/>
-    </svg>`
-  },
-  lv1: { bg:'#E6DDD5', sub:'一級輔導督導培訓',
-    svg:`<svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <!-- 皇冠 -->
-      <ellipse cx="22" cy="35" rx="11" ry="3" fill="#C8A882" opacity="0.4"/>
-      <rect x="12" y="28" width="20" height="5" rx="2.5" fill="#8D6E63"/>
-      <path d="M11 28 L14 16 L22 23 L30 16 L33 28 Z" fill="#A1887F"/>
-      <circle cx="22" cy="16" r="3" fill="#E8D4BC"/>
-      <circle cx="12" cy="20" r="2.5" fill="#D4B896"/>
-      <circle cx="32" cy="20" r="2.5" fill="#D4B896"/>
-      <rect x="14" y="29" width="16" height="3" rx="1.5" fill="#C8A882" opacity="0.6"/>
-    </svg>`
-  },
-  royal: { bg:'#E2D8CF', sub:'皇家督導輔導培訓',
-    svg:`<svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <!-- 獎盃 -->
-      <ellipse cx="22" cy="37" rx="8" ry="2.5" fill="#C8A882" opacity="0.4"/>
-      <rect x="19" y="30" width="6" height="5" rx="1" fill="#A1887F"/>
-      <rect x="15" y="33" width="14" height="3" rx="1.5" fill="#8D6E63"/>
-      <path d="M13 14 Q13 28 22 28 Q31 28 31 14 Z" fill="#C8A882"/>
-      <path d="M8 14 Q8 22 13 22" stroke="#A1887F" stroke-width="3" stroke-linecap="round" fill="none"/>
-      <path d="M36 14 Q36 22 31 22" stroke="#A1887F" stroke-width="3" stroke-linecap="round" fill="none"/>
-      <rect x="13" y="12" width="18" height="3" rx="1.5" fill="#8D6E63"/>
-      <ellipse cx="22" cy="21" rx="5" ry="4" fill="#E8D4BC" opacity="0.6"/>
-      <!-- 小星 -->
-      <path d="M22 17 L23 20 L26 20 L23.5 21.5 L24.5 24.5 L22 23 L19.5 24.5 L20.5 21.5 L18 20 L21 20 Z" fill="#fff" opacity="0.85"/>
-    </svg>`
-  },
-};
-
-function buildLevelCards() {
-  const list = document.getElementById('levelCardList');
-  list.innerHTML = LEVELS.map(l => {
-    const meta = LEVEL_META[l.key] || {};
-    return `
-    <button class="level-card-btn" onclick="openLevelOverlay('${l.key}')">
-      <div class="level-card-left">
-        <div class="level-card-icon" style="background:${meta.bg}">${meta.svg || ''}</div>
-        <div>
-          <div class="level-card-title">${l.label}</div>
-          <div class="level-card-sub">${meta.sub}</div>
-        </div>
-      </div>
-      <div class="level-card-arrow">›</div>
-    </button>`;
-  }).join('');
+function buildLevelStrip() {
+  document.getElementById('levelStripInner').innerHTML = LEVELS.map(l => `
+    <button class="level-pill ${l.key===currentLevel?'active':''}" onclick="switchLevel('${l.key}')">${l.label}</button>
+  `).join('');
 }
-
-function openLevelOverlay(key) {
+function switchLevel(key) {
   currentLevel = key;
-  currentSub = 'learn';
-  const level = LEVELS.find(l => l.key === key);
-  const meta = LEVEL_META[key] || {};
-  document.getElementById('levelDetailTitle').textContent = level.label;
-  document.getElementById('levelDetailOverlay').classList.add('open');
-  document.querySelectorAll('.sub-tab-btn').forEach(b => {
-    b.classList.toggle('active', b.dataset.sub === 'learn');
-  });
+  buildLevelStrip();
   renderLevelView();
-  document.getElementById('levelDetailContent').scrollTop = 0;
-}
-
-function closeLevelOverlay() {
-  document.getElementById('levelDetailOverlay').classList.remove('open');
 }
 
 function switchSubTab(key, btn) {
@@ -1390,7 +694,6 @@ function switchSubTab(key, btn) {
   document.querySelectorAll('.sub-tab-btn').forEach(b => b.classList.remove('active'));
   if (btn) btn.classList.add('active');
   renderLevelView();
-  document.getElementById('levelDetailContent').scrollTop = 0;
 }
 
 function renderLevelView() {
@@ -1403,21 +706,21 @@ function renderLevelView() {
   const meTab = document.getElementById('sub-me');
 
   if (!level.ready) {
-    if (subRow) subRow.style.display = 'none';
-    if (comingSoon) comingSoon.classList.remove('hidden');
-    if (learnTab) learnTab.classList.add('hidden');
-    if (dailyTab) dailyTab.classList.add('hidden');
-    if (checklistTab) checklistTab.classList.add('hidden');
-    if (meTab) meTab.classList.add('hidden');
+    subRow.style.display = 'none';
+    comingSoon.classList.remove('hidden');
+    learnTab.classList.add('hidden');
+    dailyTab.classList.add('hidden');
+    checklistTab.classList.add('hidden');
+    meTab.classList.add('hidden');
     return;
   }
 
-  if (subRow) subRow.style.display = 'flex';
-  if (comingSoon) comingSoon.classList.add('hidden');
-  if (learnTab) learnTab.classList.toggle('hidden', currentSub !== 'learn');
-  if (dailyTab) dailyTab.classList.toggle('hidden', currentSub !== 'daily');
-  if (checklistTab) checklistTab.classList.toggle('hidden', currentSub !== 'checklist');
-  if (meTab) meTab.classList.toggle('hidden', currentSub !== 'me');
+  subRow.style.display = 'flex';
+  comingSoon.classList.add('hidden');
+  learnTab.classList.toggle('hidden', currentSub !== 'learn');
+  dailyTab.classList.toggle('hidden', currentSub !== 'daily');
+  checklistTab.classList.toggle('hidden', currentSub !== 'checklist');
+  meTab.classList.toggle('hidden', currentSub !== 'me');
 
   if (currentSub === 'learn') renderLearnTab();
   else if (currentSub === 'daily') renderDailyTab();
@@ -1463,33 +766,6 @@ function renderLearnTab() {
       <div class="phase-body ${isOpen && unlocked ? '' : 'hidden'}">
         ${phase.items.map((item, iIdx) => {
           const checked = isLearnChecked(currentLevel, pIdx, iIdx);
-          const isBrandLink = currentLevel === 'newbie' && pIdx === 0 && iIdx === 0;
-          const isMoreLink  = currentLevel === 'newbie' && pIdx === 0 && iIdx === 1;
-          const isUpgradeLink = currentLevel === 'newbie' && pIdx === 0 && iIdx === 2;
-          if (isBrandLink) {
-            return `
-            <div class="phase-item-link" onclick="openDetailOverlay()">
-              <div class="phase-check ${checked?'checked':''}" onclick="event.stopPropagation();toggleLearnItem(${pIdx},${iIdx})">${checked?'✓':''}</div>
-              <span class="phase-item-text ${checked?'checked':''}">${item}</span>
-              <span class="link-arrow">›</span>
-            </div>`;
-          }
-          if (isMoreLink) {
-            return `
-            <div class="phase-item-link" onclick="openDetailOverlayMore()">
-              <div class="phase-check ${checked?'checked':''}" onclick="event.stopPropagation();toggleLearnItem(${pIdx},${iIdx})">${checked?'✓':''}</div>
-              <span class="phase-item-text ${checked?'checked':''}">${item}</span>
-              <span class="link-arrow">›</span>
-            </div>`;
-          }
-          if (isUpgradeLink) {
-            return `
-            <div class="phase-item-link" onclick="openDetailOverlayUpgrade()">
-              <div class="phase-check ${checked?'checked':''}" onclick="event.stopPropagation();toggleLearnItem(${pIdx},${iIdx})">${checked?'✓':''}</div>
-              <span class="phase-item-text ${checked?'checked':''}">${item}</span>
-              <span class="link-arrow">›</span>
-            </div>`;
-          }
           return `
           <div class="phase-item" onclick="toggleLearnItem(${pIdx},${iIdx})">
             <div class="phase-check ${checked?'checked':''}">${checked?'✓':''}</div>
@@ -1699,10 +975,13 @@ function renderMeTab() {
   `;
 }
 
-const mainTabs = ['home','story','traffic','review','qa'];
+const mainTabs = ['home','review','presale','insale','aftersale'];
 function switchTab(key, btn) {
   mainTabs.forEach(t => document.getElementById('tab-'+t).classList.add('hidden'));
   document.getElementById('tab-'+key).classList.remove('hidden');
+  document.getElementById('levelStrip').style.display = key === 'home' ? '' : 'none';
+  if (key !== 'home') document.getElementById('subTabRow').style.display = 'none';
+  else renderLevelView();
   document.querySelectorAll('.tab-btn').forEach(b => {
     b.querySelector('.tab-icon-wrap').classList.remove('active');
     b.querySelector('.tab-label').classList.remove('active');
@@ -1712,215 +991,23 @@ function switchTab(key, btn) {
   document.getElementById('content').scrollTop = 0;
 }
 
-// ── 復盤 ──────────────────────────────────────────────────
-const REVIEW_CARDS = [
-  { key:'daily', label:'每日復盤', sub:'早晨六問 & 夜晚四問', bg:'#F3EBE5',
-    svg:`<svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="22" cy="22" r="7" fill="#C8A882"/>
-      <line x1="22" y1="6" x2="22" y2="10" stroke="#A1887F" stroke-width="2.2" stroke-linecap="round"/>
-      <line x1="22" y1="34" x2="22" y2="38" stroke="#A1887F" stroke-width="2.2" stroke-linecap="round"/>
-      <line x1="6" y1="22" x2="10" y2="22" stroke="#A1887F" stroke-width="2.2" stroke-linecap="round"/>
-      <line x1="34" y1="22" x2="38" y2="22" stroke="#A1887F" stroke-width="2.2" stroke-linecap="round"/>
-      <line x1="10.5" y1="10.5" x2="13.5" y2="13.5" stroke="#A1887F" stroke-width="2" stroke-linecap="round"/>
-      <line x1="30.5" y1="30.5" x2="33.5" y2="33.5" stroke="#A1887F" stroke-width="2" stroke-linecap="round"/>
-      <line x1="33.5" y1="10.5" x2="30.5" y2="13.5" stroke="#A1887F" stroke-width="2" stroke-linecap="round"/>
-      <line x1="13.5" y1="30.5" x2="10.5" y2="33.5" stroke="#A1887F" stroke-width="2" stroke-linecap="round"/>
-    </svg>`
-  },
-  { key:'week', label:'每週復盤', sub:'本週回顧與反思', bg:'#EDE8E3',
-    svg:`<svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="8" y="12" width="28" height="24" rx="4" fill="#E8D5C0"/>
-      <rect x="8" y="12" width="28" height="9" rx="4" fill="#A1887F"/>
-      <rect x="16" y="7" width="3" height="8" rx="1.5" fill="#8D6E63"/>
-      <rect x="25" y="7" width="3" height="8" rx="1.5" fill="#8D6E63"/>
-      <rect x="13" y="26" width="5" height="5" rx="1.5" fill="#C8A882"/>
-      <rect x="20" y="26" width="5" height="5" rx="1.5" fill="#C8A882"/>
-      <rect x="27" y="26" width="5" height="5" rx="1.5" fill="#C8A882"/>
-    </svg>`
-  },
-  { key:'month', label:'每月復盤', sub:'本月成果與展望', bg:'#E6DDD5',
-    svg:`<svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M8 32 Q14 18 22 22 Q30 26 36 12" stroke="#A1887F" stroke-width="2" stroke-linecap="round" fill="none"/>
-      <circle cx="22" cy="22" r="2.5" fill="#8D6E63"/>
-      <circle cx="36" cy="12" r="3" fill="#C8A882"/>
-      <path d="M33 9 L36 12 L33 15" stroke="#8D6E63" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-      <rect x="8" y="34" width="28" height="2.5" rx="1.25" fill="#D7C4A8"/>
-    </svg>`
-  },
-  { key:'fans', label:'粉絲成長紀錄', sub:'追蹤各平台粉絲成長', bg:'#EAE3DC',
-    svg:`<svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="17" cy="16" r="5" fill="#C8A882"/>
-      <circle cx="28" cy="13" r="4" fill="#A1887F"/>
-      <path d="M8 32 C8 26 12 24 17 24 C22 24 26 26 26 32" fill="#E8D5C0"/>
-      <path d="M24 27 C24 23 27 22 28 22 C31 22 36 24 36 28" fill="#D4B896"/>
-      <path d="M18 36 L20 32 L24 38 L27 30 L30 34 L33 28" stroke="#8D6E63" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-    </svg>`
-  },
-];
-
-function buildReviewCards() {
-  const el = document.getElementById('reviewCardList');
-  if (!el) return;
-  el.innerHTML = REVIEW_CARDS.map(c => `
-    <button class="level-card-btn" onclick="openReviewOverlay('${c.key}')">
-      <div class="level-card-left">
-        <div class="level-card-icon" style="background:${c.bg}">${c.svg}</div>
-        <div>
-          <div class="level-card-title">${c.label}</div>
-          <div class="level-card-sub">${c.sub}</div>
-        </div>
-      </div>
-      <div class="level-card-arrow">›</div>
-    </button>`).join('');
-}
-
-let reviewCardMode = 'daily';
-
-function openReviewOverlay(key) {
-  reviewCardMode = key;
-  const card = REVIEW_CARDS.find(c => c.key === key);
-  document.getElementById('reviewDetailTitle').textContent = card.label;
-  document.getElementById('reviewDetailOverlay').classList.add('open');
-  document.getElementById('reviewDetailBody').scrollTop = 0;
-
-  if (key === 'daily') {
-    document.getElementById('reviewDailySection').classList.remove('hidden');
-    document.getElementById('reviewOtherSection').classList.add('hidden');
-    reviewTab = '晨之六問';
-    document.querySelectorAll('.seg-btn').forEach((b,i) => b.classList.toggle('active', i===0));
-    // 重置卡片選擇
-    const bm = document.getElementById('btn-morning');
-    const bn = document.getElementById('btn-night');
-    if (bm) bm.classList.add('active');
-    if (bn) bn.classList.remove('active');
-    renderReview();
-  } else if (key === 'week' || key === 'month') {
-    document.getElementById('reviewDailySection').classList.add('hidden');
-    document.getElementById('reviewOtherSection').classList.remove('hidden');
-    reviewTab = key === 'week' ? '週復盤' : '月復盤';
-    renderReviewOther();
-  } else if (key === 'fans') {
-    document.getElementById('reviewDailySection').classList.add('hidden');
-    document.getElementById('reviewOtherSection').classList.add('hidden');
-    document.getElementById('reviewDetailBody').innerHTML = `
-      <div style="padding:14px 16px 32px;">
-
-        <!-- 平台數字卡片 -->
-        <div id="fansStatCards" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;"></div>
-
-        <!-- 折線圖區 -->
-        <div style="background:#fff;border-radius:18px;padding:16px;box-shadow:0 2px 14px rgba(109,76,65,0.09);margin-bottom:16px;">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-            <div style="font-size:14px;font-weight:800;color:#3E2723;">成長趨勢</div>
-            <div style="display:flex;gap:6px;" id="chartPlatformBtns"></div>
-          </div>
-          <canvas id="fansChart" height="160" style="width:100%;"></canvas>
-          <div id="fansChartEmpty" class="hidden" style="text-align:center;padding:30px 0;font-size:13px;color:#C8A882;">記錄至少 2 筆資料後顯示趨勢圖</div>
-        </div>
-
-        <!-- 新增記錄 -->
-        <div class="fans-add-card">
-          <div class="fans-add-title">📝 新增紀錄</div>
-          <div style="margin-bottom:14px;">
-            <div style="font-size:12px;font-weight:700;color:#A1887F;margin-bottom:6px;">紀錄日期</div>
-            <input type="date" id="fansDatePicker"
-              style="width:100%;border:1.5px solid #D7C4A8;border-radius:10px;padding:9px 12px;font-size:14px;color:#3E2723;background:#FAF6F0;outline:none;font-family:inherit;">
-          </div>
-          <div class="fans-platform-list">
-            <div class="fans-platform-row">
-              <div class="fans-platform-info">
-                <div class="fans-platform-icon ig-icon">IG</div>
-                <span class="fans-platform-name">Instagram</span>
-              </div>
-              <input class="fans-input" id="fans-ig" type="number" placeholder="粉絲數">
-            </div>
-            <div class="fans-platform-row">
-              <div class="fans-platform-info">
-                <div class="fans-platform-icon fb-icon">FB</div>
-                <span class="fans-platform-name">Facebook</span>
-              </div>
-              <input class="fans-input" id="fans-fb" type="number" placeholder="粉絲數">
-            </div>
-            <div class="fans-platform-row">
-              <div class="fans-platform-info">
-                <div class="fans-platform-icon tk-icon">TK</div>
-                <span class="fans-platform-name">TikTok</span>
-              </div>
-              <input class="fans-input" id="fans-tk" type="number" placeholder="粉絲數">
-            </div>
-            <div class="fans-platform-row">
-              <div class="fans-platform-info">
-                <div class="fans-platform-icon xhs-icon">紅書</div>
-                <span class="fans-platform-name">小紅書</span>
-              </div>
-              <input class="fans-input" id="fans-xhs" type="number" placeholder="粉絲數">
-            </div>
-            <div class="fans-platform-row">
-              <div class="fans-platform-info">
-                <div class="fans-platform-icon th-icon">Th</div>
-                <span class="fans-platform-name">Threads</span>
-              </div>
-              <input class="fans-input" id="fans-threads" type="number" placeholder="粉絲數">
-            </div>
-          </div>
-          <button class="save-btn" style="margin-top:14px;" onclick="saveFansRecord()">☕ 儲存紀錄</button>
-        </div>
-
-        <!-- 歷史 -->
-        <div class="history-divider" style="margin-top:20px;">
-          <div class="history-divider-line"></div>
-          <div class="history-divider-text">📖 歷史紀錄</div>
-          <div class="history-divider-line"></div>
-        </div>
-        <div id="fansHistory"></div>
-      </div>`;
-
-    const now = new Date();
-    // 設定日期選擇器預設為今天
-    const picker = document.getElementById('fansDatePicker');
-    if (picker) {
-      const y = now.getFullYear();
-      const m = String(now.getMonth()+1).padStart(2,'0');
-      const d = String(now.getDate()).padStart(2,'0');
-      picker.value = `${y}-${m}-${d}`;
-    }
-    renderFansAll();
-  }
-}
-
-function closeReviewOverlay() {
-  document.getElementById('reviewDetailOverlay').classList.remove('open');
-}
-
 function getHistoryKey(tab) { return `review_history_${tab}`; }
-
-function switchReview(tab, btn, activeId, inactiveId) {
+function switchReview(tab, btn) {
   reviewTab = tab;
-  // 新的卡片式切換
-  if (activeId && inactiveId) {
-    const a = document.getElementById(activeId);
-    const b = document.getElementById(inactiveId);
-    if (a) a.classList.add('active');
-    if (b) b.classList.remove('active');
-  } else {
-    // 舊的 seg-btn 切換（週/月復盤備用）
-    document.querySelectorAll('.seg-btn').forEach(b => b.classList.remove('active'));
-    if (btn) btn.classList.add('active');
-  }
+  document.querySelectorAll('.seg-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
   renderReview();
 }
-
 function renderReview() {
   const prompts = reviewPrompts[reviewTab];
   const draft = JSON.parse(localStorage.getItem('review_draft_'+reviewTab) || '{}');
   document.getElementById('reviewQuestions').innerHTML = prompts.map((q,i) => `
     <div class="prompt-group">
-      <div class="prompt-q">${i+1}. ${q}</div>
+      <div class="prompt-q">Q${i+1}. ${q}</div>
       <textarea id="rq${i}" placeholder="點此輸入..." oninput="saveDraft()">${draft[i]||''}</textarea>
     </div>`).join('');
   renderHistory();
 }
-
 function saveDraft() {
   const data = {};
   reviewPrompts[reviewTab].forEach((_,i) => {
@@ -1929,7 +1016,6 @@ function saveDraft() {
   });
   localStorage.setItem('review_draft_'+reviewTab, JSON.stringify(data));
 }
-
 function saveReview() {
   const prompts = reviewPrompts[reviewTab];
   const data = {};
@@ -1947,91 +1033,29 @@ function saveReview() {
   history.unshift({ date: dateStr, time: timeStr, data });
   localStorage.setItem(getHistoryKey(reviewTab), JSON.stringify(history));
   localStorage.removeItem('review_draft_'+reviewTab);
-  const btns = document.querySelectorAll('.save-btn');
-  btns.forEach(b => b.textContent = '✅ 已儲存！');
-  setTimeout(() => { btns.forEach(b => b.textContent = '☕ 儲存復盤'); renderReview(); }, 1200);
+  const btn = document.querySelector('.save-btn');
+  btn.textContent = '✅ 已儲存！';
+  setTimeout(() => { btn.textContent = '☕ 儲存復盤'; renderReview(); }, 1200);
 }
-
 function renderHistory() {
   const prompts = reviewPrompts[reviewTab];
   const history = JSON.parse(localStorage.getItem(getHistoryKey(reviewTab)) || '[]');
   const container = document.getElementById('reviewHistory');
-  if (!container) return;
-  container.innerHTML = !history.length
-    ? `<div class="history-empty">還沒有復盤記錄，儲存後就會出現在這裡 ☕</div>`
-    : history.map(entry => `
-      <div class="history-card">
-        <div class="history-date"><span class="history-date-dot"></span>${entry.date}・${entry.time}</div>
-        ${prompts.map((q,i) => entry.data[i] ? `
-          <div class="history-qa">
-            <div class="history-q">${i+1}. ${q}</div>
-            <div class="history-a">${entry.data[i].replace(/\n/g,'<br>')}</div>
-          </div>` : ''
-        ).join('')}
-      </div>`).join('');
-}
-
-// 週/月復盤
-function renderReviewOther() {
-  const prompts = reviewPrompts[reviewTab];
-  const draft = JSON.parse(localStorage.getItem('review_draft_'+reviewTab) || '{}');
-  document.getElementById('reviewQuestionsOther').innerHTML = prompts.map((q,i) => `
-    <div class="prompt-group">
-      <div class="prompt-q">${i+1}. ${q}</div>
-      <textarea id="orq${i}" placeholder="點此輸入..." oninput="saveDraftOther()">${draft[i]||''}</textarea>
+  if (!history.length) {
+    container.innerHTML = `<div class="history-empty">還沒有復盤記錄，儲存後就會出現在這裡 ☕</div>`;
+    return;
+  }
+  container.innerHTML = history.map(entry => `
+    <div class="history-card">
+      <div class="history-date"><span class="history-date-dot"></span>${entry.date}・${entry.time}</div>
+      ${prompts.map((q,i) => entry.data[i] ? `
+        <div class="history-qa">
+          <div class="history-q">Q${i+1}. ${q}</div>
+          <div class="history-a">${entry.data[i].replace(/\n/g,'<br>')}</div>
+        </div>` : ''
+      ).join('')}
     </div>`).join('');
-  renderHistoryOther();
 }
-
-function saveDraftOther() {
-  const data = {};
-  reviewPrompts[reviewTab].forEach((_,i) => {
-    const el = document.getElementById('orq'+i);
-    if (el) data[i] = el.value;
-  });
-  localStorage.setItem('review_draft_'+reviewTab, JSON.stringify(data));
-}
-
-function saveReviewOther() {
-  const prompts = reviewPrompts[reviewTab];
-  const data = {};
-  let hasContent = false;
-  prompts.forEach((_,i) => {
-    const val = document.getElementById('orq'+i).value.trim();
-    data[i] = val;
-    if (val) hasContent = true;
-  });
-  if (!hasContent) return;
-  const now = new Date();
-  const dateStr = now.toLocaleDateString('zh-TW', { year:'numeric', month:'long', day:'numeric', weekday:'short' });
-  const timeStr = now.toLocaleTimeString('zh-TW', { hour:'2-digit', minute:'2-digit' });
-  const history = JSON.parse(localStorage.getItem(getHistoryKey(reviewTab)) || '[]');
-  history.unshift({ date: dateStr, time: timeStr, data });
-  localStorage.setItem(getHistoryKey(reviewTab), JSON.stringify(history));
-  localStorage.removeItem('review_draft_'+reviewTab);
-  const btn = document.querySelector('#reviewOtherSection .save-btn');
-  if (btn) { btn.textContent = '✅ 已儲存！'; setTimeout(() => { btn.textContent = '☕ 儲存復盤'; renderReviewOther(); }, 1200); }
-}
-
-function renderHistoryOther() {
-  const prompts = reviewPrompts[reviewTab];
-  const history = JSON.parse(localStorage.getItem(getHistoryKey(reviewTab)) || '[]');
-  const container = document.getElementById('reviewHistoryOther');
-  if (!container) return;
-  container.innerHTML = !history.length
-    ? `<div class="history-empty">還沒有復盤記錄，儲存後就會出現在這裡 ☕</div>`
-    : history.map(entry => `
-      <div class="history-card">
-        <div class="history-date"><span class="history-date-dot"></span>${entry.date}・${entry.time}</div>
-        ${prompts.map((q,i) => entry.data[i] ? `
-          <div class="history-qa">
-            <div class="history-q">${i+1}. ${q}</div>
-            <div class="history-a">${entry.data[i].replace(/\n/g,'<br>')}</div>
-          </div>` : ''
-        ).join('')}
-      </div>`).join('');
-}
-
 
 const saleColors = { presale:'#8D6E63', insale:'#795548', aftersale:'#6D4C41' };
 function renderSaleTabs() {
@@ -2055,649 +1079,6 @@ function toggleAccordion(id) {
   const open = !body.classList.contains('hidden');
   body.classList.toggle('hidden', open);
   arr.textContent = open ? '▼' : '▲';
-}
-
-// ── 品牌詳情 Overlay ─────────────────────────────────────
-function closeReviewOverlay() {
-  document.getElementById('reviewDetailOverlay').classList.remove('open');
-}
-
-function openDetailOverlay() {
-  document.getElementById('detailOverlayBrand').classList.add('open');
-}
-
-function openDetailOverlayMore() {
-  document.getElementById('detailOverlayMore').classList.add('open');
-}
-
-function openDetailOverlayUpgrade() {
-  document.getElementById('detailOverlayUpgrade').classList.add('open');
-}
-
-function closeDetailOverlay() {
-  document.getElementById('detailOverlayBrand').classList.remove('open');
-  document.getElementById('detailOverlayMore').classList.remove('open');
-  document.getElementById('detailOverlayUpgrade').classList.remove('open');
-}
-
-// ── 粉絲成長紀錄 ──────────────────────────────────────────
-const FANS_PLATFORMS = [
-  { key:'ig',      label:'Instagram', iconClass:'ig-icon',  short:'IG',   color:'#A1887F' },
-  { key:'fb',      label:'Facebook',  iconClass:'fb-icon',  short:'FB',   color:'#8D6E63' },
-  { key:'tk',      label:'TikTok',    iconClass:'tk-icon',  short:'TK',   color:'#6D4C41' },
-  { key:'xhs',     label:'小紅書',    iconClass:'xhs-icon', short:'紅書', color:'#795548' },
-  { key:'threads', label:'Threads',   iconClass:'th-icon',  short:'Th',   color:'#5D4037' },
-];
-
-let fansChartPlatform = 'ig';
-
-function getFansHistory() {
-  return JSON.parse(localStorage.getItem('fans_history') || '[]');
-}
-
-function renderFansAll() {
-  renderFansStatCards();
-  renderFansChart();
-  renderFansHistory();
-}
-
-function renderFansStatCards() {
-  const el = document.getElementById('fansStatCards');
-  if (!el) return;
-  const history = getFansHistory();
-  const latest = history[0]?.data || {};
-  const prev = history[1]?.data || {};
-  el.innerHTML = FANS_PLATFORMS.map(p => {
-    const cur = latest[p.key];
-    const old = prev[p.key];
-    const diff = (cur != null && old != null) ? cur - old : null;
-    const diffHtml = diff != null
-      ? `<div style="font-size:11px;font-weight:700;color:${diff>=0?'#8D6E63':'#C62828'};margin-top:2px;">${diff>=0?'▲':'▼'} ${Math.abs(diff).toLocaleString()}</div>`
-      : `<div style="font-size:11px;color:#C8A882;margin-top:2px;">尚無對比</div>`;
-    const miniCanvas = `<canvas id="mini-${p.key}" width="80" height="30" style="display:block;margin-top:6px;"></canvas>`;
-    return `<div style="background:#fff;border-radius:14px;padding:13px 14px;box-shadow:0 2px 10px rgba(109,76,65,0.08);">
-      <div style="display:flex;align-items:center;gap:7px;margin-bottom:6px;">
-        <div class="fans-platform-icon ${p.iconClass}" style="width:26px;height:26px;font-size:9px;border-radius:8px;">${p.short}</div>
-        <span style="font-size:12px;font-weight:700;color:#A1887F;">${p.label}</span>
-      </div>
-      <div style="font-size:22px;font-weight:900;color:#3E2723;">${cur != null ? cur.toLocaleString() : '—'}</div>
-      ${diffHtml}
-      ${miniCanvas}
-    </div>`;
-  }).join('');
-  // 畫迷你折線
-  setTimeout(() => {
-    const history = getFansHistory();
-    FANS_PLATFORMS.forEach(p => {
-      const canvas = document.getElementById('mini-'+p.key);
-      if (!canvas) return;
-      const pts = history.slice(0,8).reverse().map(h => h.data[p.key]).filter(v => v != null);
-      if (pts.length < 2) return;
-      drawMiniLine(canvas, pts, p.color);
-    });
-  }, 50);
-}
-
-function drawMiniLine(canvas, pts, color) {
-  const ctx = canvas.getContext('2d');
-  const w = canvas.width, h = canvas.height;
-  ctx.clearRect(0, 0, w, h);
-  const min = Math.min(...pts), max = Math.max(...pts);
-  const range = max - min || 1;
-  const x = (i) => (i / (pts.length-1)) * (w-4) + 2;
-  const y = (v) => h - 4 - ((v-min)/range) * (h-8);
-  ctx.beginPath();
-  ctx.moveTo(x(0), y(pts[0]));
-  pts.forEach((v,i) => { if(i>0) ctx.lineTo(x(i), y(v)); });
-  ctx.strokeStyle = color;
-  ctx.lineWidth = 2;
-  ctx.lineJoin = 'round';
-  ctx.lineCap = 'round';
-  ctx.stroke();
-  // 最後一點
-  ctx.beginPath();
-  ctx.arc(x(pts.length-1), y(pts[pts.length-1]), 3, 0, Math.PI*2);
-  ctx.fillStyle = color;
-  ctx.fill();
-}
-
-function renderFansChart() {
-  const canvas = document.getElementById('fansChart');
-  const empty = document.getElementById('fansChartEmpty');
-  const btnContainer = document.getElementById('chartPlatformBtns');
-  if (!canvas || !btnContainer) return;
-
-  // platform switch buttons
-  btnContainer.innerHTML = FANS_PLATFORMS.map(p => `
-    <button onclick="switchFansChart('${p.key}')" id="chartBtn-${p.key}"
-      style="border:none;cursor:pointer;font-family:inherit;font-size:11px;font-weight:700;
-      padding:4px 10px;border-radius:20px;transition:all 0.2s;
-      background:${p.key===fansChartPlatform?p.color:'#F0E6D3'};
-      color:${p.key===fansChartPlatform?'#fff':'#A1887F'};">
-      ${p.short}
-    </button>`).join('');
-
-  drawFansChart();
-}
-
-function switchFansChart(key) {
-  fansChartPlatform = key;
-  renderFansChart();
-}
-
-function drawFansChart() {
-  const canvas = document.getElementById('fansChart');
-  const empty = document.getElementById('fansChartEmpty');
-  if (!canvas) return;
-  const history = getFansHistory();
-  const platform = FANS_PLATFORMS.find(p => p.key === fansChartPlatform);
-  const pts = history.filter(h => h.data[fansChartPlatform] != null)
-    .reverse()
-    .map(h => ({ date: h.date.replace(/\d{4}年/, '').replace('日', '').replace('週一','').replace('週二','').replace('週三','').replace('週四','').replace('週五','').replace('週六','').replace('週日','').trim(), val: h.data[fansChartPlatform] }));
-
-  if (pts.length < 2) {
-    canvas.style.display = 'none';
-    if (empty) empty.classList.remove('hidden');
-    return;
-  }
-  canvas.style.display = 'block';
-  if (empty) empty.classList.add('hidden');
-
-  const dpr = window.devicePixelRatio || 1;
-  const rect = canvas.getBoundingClientRect();
-  const W = rect.width || canvas.parentElement.clientWidth - 32;
-  const H = 160;
-  canvas.width = W * dpr;
-  canvas.height = H * dpr;
-  canvas.style.width = W + 'px';
-  canvas.style.height = H + 'px';
-
-  const ctx = canvas.getContext('2d');
-  ctx.scale(dpr, dpr);
-  ctx.clearRect(0, 0, W, H);
-
-  const pad = { top:16, right:12, bottom:36, left:44 };
-  const cw = W - pad.left - pad.right;
-  const ch = H - pad.top - pad.bottom;
-
-  const vals = pts.map(p => p.val);
-  const min = Math.min(...vals), max = Math.max(...vals);
-  const range = max - min || 1;
-  const xPos = (i) => pad.left + (i/(pts.length-1)) * cw;
-  const yPos = (v) => pad.top + ch - ((v-min)/range) * ch;
-
-  // 格線
-  ctx.strokeStyle = '#F0E6D3';
-  ctx.lineWidth = 1;
-  [0, 0.25, 0.5, 0.75, 1].forEach(t => {
-    const y = pad.top + ch * (1-t);
-    ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(W-pad.right, y); ctx.stroke();
-    ctx.fillStyle = '#C8A882';
-    ctx.font = `${10 * dpr / dpr}px PingFang TC, sans-serif`;
-    ctx.textAlign = 'right';
-    ctx.fillText(Math.round(min + range*t).toLocaleString(), pad.left-6, y+4);
-  });
-
-  // 面積填充
-  ctx.beginPath();
-  ctx.moveTo(xPos(0), yPos(pts[0].val));
-  pts.forEach((p,i) => { if(i>0) ctx.lineTo(xPos(i), yPos(p.val)); });
-  ctx.lineTo(xPos(pts.length-1), pad.top+ch);
-  ctx.lineTo(xPos(0), pad.top+ch);
-  ctx.closePath();
-  const grad = ctx.createLinearGradient(0, pad.top, 0, pad.top+ch);
-  grad.addColorStop(0, platform.color + '33');
-  grad.addColorStop(1, platform.color + '05');
-  ctx.fillStyle = grad;
-  ctx.fill();
-
-  // 折線
-  ctx.beginPath();
-  ctx.moveTo(xPos(0), yPos(pts[0].val));
-  pts.forEach((p,i) => { if(i>0) ctx.lineTo(xPos(i), yPos(p.val)); });
-  ctx.strokeStyle = platform.color;
-  ctx.lineWidth = 2.5;
-  ctx.lineJoin = 'round';
-  ctx.lineCap = 'round';
-  ctx.stroke();
-
-  // 點 + X軸標籤
-  pts.forEach((p,i) => {
-    ctx.beginPath();
-    ctx.arc(xPos(i), yPos(p.val), 4, 0, Math.PI*2);
-    ctx.fillStyle = '#fff';
-    ctx.fill();
-    ctx.strokeStyle = platform.color;
-    ctx.lineWidth = 2;
-    ctx.stroke();
-    // 日期標籤（每隔幾個顯示）
-    if (pts.length <= 8 || i % Math.ceil(pts.length/6) === 0) {
-      ctx.fillStyle = '#A1887F';
-      ctx.font = `10px PingFang TC, sans-serif`;
-      ctx.textAlign = 'center';
-      ctx.fillText(p.date, xPos(i), H - 8);
-    }
-  });
-}
-
-function saveFansRecord() {
-  const picker = document.getElementById('fansDatePicker');
-  let dateObj = new Date();
-  if (picker && picker.value) dateObj = new Date(picker.value + 'T12:00:00');
-  const dateStr = dateObj.toLocaleDateString('zh-TW', { year:'numeric', month:'long', day:'numeric', weekday:'short' });
-  const record = { date: dateStr, ts: dateObj.getTime(), data:{} };
-  let hasContent = false;
-  FANS_PLATFORMS.forEach(p => {
-    const el = document.getElementById('fans-'+p.key);
-    if (el && el.value) { record.data[p.key] = parseInt(el.value); hasContent = true; }
-  });
-  if (!hasContent) return;
-  const history = getFansHistory();
-  // 插入正確的時間順序位置
-  const idx = history.findIndex(h => h.ts <= record.ts);
-  if (idx === -1) history.push(record);
-  else history.splice(idx, 0, record);
-  localStorage.setItem('fans_history', JSON.stringify(history));
-  FANS_PLATFORMS.forEach(p => { const el = document.getElementById('fans-'+p.key); if (el) el.value=''; });
-  const btn = document.querySelector('#reviewDetailBody .save-btn');
-  if (btn) { btn.textContent = '✅ 已儲存！'; setTimeout(() => { btn.textContent = '☕ 儲存紀錄'; renderFansAll(); }, 1200); }
-  else renderFansAll();
-}
-
-function renderFansHistory() {
-  const container = document.getElementById('fansHistory');
-  if (!container) return;
-  const history = getFansHistory();
-  if (!history.length) {
-    container.innerHTML = `<div class="history-empty">還沒有紀錄，儲存後就會出現在這裡 ☕</div>`;
-    return;
-  }
-  container.innerHTML = history.map((entry, idx) => {
-    const prev = history[idx+1];
-    const rows = FANS_PLATFORMS.filter(p => entry.data[p.key] != null).map(p => {
-      const num = entry.data[p.key];
-      const prevNum = prev?.data?.[p.key];
-      let diffHtml = '';
-      if (prevNum != null) {
-        const diff = num - prevNum;
-        const cls = diff >= 0 ? 'fans-diff-up' : 'fans-diff-down';
-        const sign = diff >= 0 ? '+' : '';
-        diffHtml = `<span class="fans-history-diff ${cls}">${sign}${diff.toLocaleString()}</span>`;
-      }
-      return `<div class="fans-history-row">
-        <div class="fans-history-platform">
-          <div class="fans-platform-icon ${p.iconClass}" style="width:26px;height:26px;font-size:9px;">${p.short}</div>
-          ${p.label}
-        </div>
-        <div class="fans-history-num">${num.toLocaleString()}${diffHtml}</div>
-      </div>`;
-    }).join('');
-    return `<div class="fans-history-card">
-      <div class="fans-history-date"><span class="history-date-dot"></span>${entry.date}</div>
-      ${rows}
-    </div>`;
-  }).join('');
-}
-
-// ── 引流 ──────────────────────────────────────────────────
-const TRAFFIC_CARDS = [
-  { key:'bizaccount', label:'轉換商業帳號', sub:'開始前必做的第一步',
-    svg:`<svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="8" y="10" width="28" height="26" rx="5" fill="#F3EBE5" stroke="#C8A882" stroke-width="1.8"/>
-      <rect x="8" y="10" width="28" height="10" rx="5" fill="#C8A882"/>
-      <rect x="8" y="15" width="28" height="5" fill="#C8A882"/>
-      <circle cx="14" cy="15" r="2" fill="#fff" opacity="0.7"/>
-      <circle cx="21" cy="15" r="2" fill="#fff" opacity="0.7"/>
-      <circle cx="28" cy="15" r="2" fill="#fff" opacity="0.7"/>
-      <path d="M16 28 L20 32 L28 24" stroke="#8D6E63" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>`
-  },
-  { key:'mindset', label:'破除自媒體迷思', sub:'觀念建立，從這裡開始',
-    svg:`<svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="22" cy="18" r="10" fill="#F3EBE5" stroke="#C8A882" stroke-width="1.8"/>
-      <path d="M22 11 C22 11 18 14 18 18 C18 21 20 23 22 24 C24 23 26 21 26 18 C26 14 22 11 22 11Z" fill="#C8A882"/>
-      <circle cx="22" cy="18" r="3.5" fill="#8D6E63"/>
-      <rect x="20" y="29" width="4" height="3" rx="1.5" fill="#A1887F"/>
-      <rect x="19" y="32" width="6" height="2.5" rx="1.25" fill="#C8A882"/>
-      <path d="M15 14 L12 11" stroke="#A1887F" stroke-width="1.5" stroke-linecap="round"/>
-      <path d="M29 14 L32 11" stroke="#A1887F" stroke-width="1.5" stroke-linecap="round"/>
-      <path d="M13 19 L10 19" stroke="#A1887F" stroke-width="1.5" stroke-linecap="round"/>
-      <path d="M31 19 L34 19" stroke="#A1887F" stroke-width="1.5" stroke-linecap="round"/>
-    </svg>`
-  },
-  { key:'positioning', label:'尋找個人定位', sub:'找到你的獨特風格與受眾',
-    svg:`<svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="22" cy="20" r="10" stroke="#A1887F" stroke-width="2.2" fill="#F3EBE5"/>
-      <circle cx="22" cy="20" r="5" fill="#C8A882"/>
-      <circle cx="22" cy="20" r="2" fill="#8D6E63"/>
-      <line x1="22" y1="7" x2="22" y2="10" stroke="#A1887F" stroke-width="2" stroke-linecap="round"/>
-      <line x1="22" y1="30" x2="22" y2="33" stroke="#A1887F" stroke-width="2" stroke-linecap="round"/>
-      <line x1="9" y1="20" x2="12" y2="20" stroke="#A1887F" stroke-width="2" stroke-linecap="round"/>
-      <line x1="32" y1="20" x2="35" y2="20" stroke="#A1887F" stroke-width="2" stroke-linecap="round"/>
-      <line x1="22" y1="33" x2="22" y2="37" stroke="#C8A882" stroke-width="2.5" stroke-linecap="round"/>
-    </svg>`
-  },
-  { key:'explore', label:'賽道教學', sub:'探店・旅遊・料理・育兒・情侶・美妝・超商開箱・星座',
-    svg:`<svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="9" y="16" width="26" height="20" rx="4" fill="#F3EBE5"/>
-      <rect x="9" y="16" width="26" height="7" rx="4" fill="#C8A882"/>
-      <rect x="17" y="9" width="10" height="9" rx="3" fill="#A1887F"/>
-      <circle cx="29" cy="30" r="4" fill="#8D6E63"/>
-      <path d="M27.5 30 L28.5 31 L31 28.5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      <rect x="13" y="27" width="9" height="2" rx="1" fill="#D7C4A8"/>
-      <rect x="13" y="31" width="6" height="2" rx="1" fill="#D7C4A8"/>
-    </svg>`
-  },
-  { key:'video', label:'製作影片', sub:'拍攝、剪輯、上架全流程',
-    svg:`<svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="7" y="13" width="24" height="18" rx="4" fill="#F3EBE5" stroke="#C8A882" stroke-width="1.5"/>
-      <path d="M31 18 L37 15 L37 29 L31 26 Z" fill="#C8A882"/>
-      <circle cx="19" cy="22" r="5" fill="#A1887F"/>
-      <path d="M17 20 L17 24 L22 22 Z" fill="#fff"/>
-    </svg>`
-  },
-];
-
-function buildTrafficCards() {
-  const el = document.getElementById('trafficCardList');
-  if (!el) return;
-  const colors = { positioning:'#F3EBE5', explore:'#EDE8E3', video:'#E6DDD5' };
-  el.innerHTML = TRAFFIC_CARDS.map(c => `
-    <button class="level-card-btn" onclick="openTrafficOverlay('${c.key}')">
-      <div class="level-card-left">
-        <div class="level-card-icon" style="background:${colors[c.key]}">${c.svg}</div>
-        <div>
-          <div class="level-card-title">${c.label}</div>
-          <div class="level-card-sub">${c.sub}</div>
-        </div>
-      </div>
-      <div class="level-card-arrow">›</div>
-    </button>`).join('');
-}
-
-function openTrafficOverlay(key) {
-  const card = TRAFFIC_CARDS.find(c => c.key === key);
-  document.getElementById('trafficDetailTitle').textContent = card.label;
-  document.getElementById('trafficDetailOverlay').classList.add('open');
-
-  const body = document.getElementById('trafficDetailBody');
-  body.scrollTop = 0;
-
-  if (key === 'bizaccount') {
-    body.innerHTML = `<div style="padding:14px 16px 32px;">
-      <div class="upgrade-tip-card" style="margin-bottom:16px;">
-        <div class="upgrade-tip-body">⚠️ 隱藏帳號請記得打開！</div>
-      </div>
-      <div class="detail-section">
-        <div class="brand-block" style="margin-bottom:12px;">
-          <div class="brand-block-title">為什麼要改商業帳號？</div>
-          <div class="brand-win-grid" style="grid-template-columns:1fr;">
-            <div class="brand-win-item">→ 看數據（流量、觸及、點擊）</div>
-            <div class="brand-win-item">→ 才知道怎麼優化</div>
-          </div>
-        </div>
-        <div class="brand-block" style="margin-bottom:14px;">
-          <div class="brand-block-title">為什麼一定要公開帳號？</div>
-          <div class="brand-win-grid" style="grid-template-columns:1fr;">
-            <div class="brand-win-item">→ 不公開 ＝ 別人看不到你 ＝ 沒開店</div>
-          </div>
-        </div>
-        <div style="font-size:13px;font-weight:700;color:#6D4C41;margin-bottom:12px;">請依照下方操作步驟設定為商業帳號 ↓</div>
-        <div class="upgrade-steps">
-          <div class="upgrade-step"><div class="upgrade-num">❶</div><div class="upgrade-text">點選主頁右上方「三條線」</div></div>
-          <div class="upgrade-step"><div class="upgrade-num">❷</div><div class="upgrade-text">點選「帳號類型和工具」</div></div>
-          <div class="upgrade-step"><div class="upgrade-num">❸</div><div class="upgrade-text">點選「帳號類型」</div></div>
-          <div class="upgrade-step"><div class="upgrade-num">❹</div><div class="upgrade-text">點選「切換帳號類型」</div></div>
-          <div class="upgrade-step"><div class="upgrade-num">❺</div><div class="upgrade-text">切換為商業帳號，就完成囉！</div></div>
-        </div>
-      </div>
-    </div>`;
-    return;
-  }
-
-  if (key === 'positioning') {
-    body.innerHTML = `<div style="padding:14px 16px 32px;">
-
-      <!-- 到底怎麼定位 -->
-      <div class="detail-section">
-        <div class="detail-section-title">到底怎麼定位？</div>
-        <div class="brand-pillar" style="margin-bottom:12px;">
-          <div class="brand-pillar-body">以終為始，要先決定最終的目標是什麼！
-以下這三種是常見的目標。</div>
-        </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:6px;">
-          <div style="background:#C8A882;border-radius:10px;padding:8px;text-align:center;font-size:12px;font-weight:800;color:#fff;">純增粉</div>
-          <div style="background:#A1887F;border-radius:10px;padding:8px;text-align:center;font-size:12px;font-weight:800;color:#fff;">賣產品</div>
-          <div style="background:#8D6E63;border-radius:10px;padding:8px;text-align:center;font-size:12px;font-weight:800;color:#fff;">增加成員</div>
-        </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:6px;">
-          <div style="background:#fff;border-radius:10px;padding:10px;font-size:11px;color:#5D4037;line-height:1.7;box-shadow:0 2px 8px rgba(109,76,65,0.08);">
-            <div style="font-size:10px;font-weight:700;color:#C8A882;margin-bottom:4px;">建議定位</div>
-            1. 星座<br>2. 命理<br>3. 塔羅<br>4. 社群教學<br>5. 語錄
-            <div style="margin-top:6px;font-size:10px;color:#A1887F;">推薦指數 ★★★</div>
-          </div>
-          <div style="background:#fff;border-radius:10px;padding:10px;font-size:11px;color:#5D4037;line-height:1.7;box-shadow:0 2px 8px rgba(109,76,65,0.08);">
-            <div style="font-size:10px;font-weight:700;color:#A1887F;margin-bottom:4px;">建議定位</div>
-            1. 減脂食譜<br>2. 居家跳操<br>3. 旅遊探店<br>4. 美妝保養<br>5. 美業<br>6. 超商開箱
-            <div style="margin-top:6px;font-size:10px;color:#A1887F;">推薦指數 ★★★★★</div>
-          </div>
-          <div style="background:#fff;border-radius:10px;padding:10px;font-size:11px;color:#5D4037;line-height:1.7;box-shadow:0 2px 8px rgba(109,76,65,0.08);">
-            <div style="font-size:10px;font-weight:700;color:#8D6E63;margin-bottom:4px;">建議定位</div>
-            1. 減脂食譜<br>2. 居家跳操<br>3. 親子價值觀<br>4. 職場知識分享<br>5. 財經議題
-            <div style="margin-top:6px;font-size:10px;color:#A1887F;">推薦指數 ★★★★★</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 社群漏斗 -->
-      <div class="detail-section">
-        <div class="detail-section-title">社群漏斗（以IG、抖音來說）</div>
-        <div style="background:#fff;border-radius:16px;padding:14px 16px;box-shadow:0 2px 12px rgba(109,76,65,0.08);">
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <div style="display:flex;align-items:center;gap:10px;">
-              <div style="background:#F3EBE5;border-radius:8px;padding:6px 10px;font-size:12px;font-weight:800;color:#A1887F;min-width:44px;text-align:center;">曝光</div>
-              <div style="font-size:12px;color:#6D4C41;">標題、影片、貼文 → <strong>定位</strong></div>
-            </div>
-            <div style="display:flex;align-items:center;gap:10px;">
-              <div style="background:#EDE8E3;border-radius:8px;padding:6px 10px;font-size:12px;font-weight:800;color:#8D6E63;min-width:44px;text-align:center;">互動</div>
-              <div style="font-size:12px;color:#6D4C41;">按讚、留言、分享、珍藏</div>
-            </div>
-            <div style="display:flex;align-items:center;gap:10px;">
-              <div style="background:#E6DDD5;border-radius:8px;padding:6px 10px;font-size:12px;font-weight:800;color:#795548;min-width:44px;text-align:center;">粉絲</div>
-              <div style="font-size:12px;color:#6D4C41;">限動、私訊</div>
-            </div>
-            <div style="display:flex;align-items:center;gap:10px;">
-              <div style="background:#6D4C41;border-radius:8px;padding:6px 10px;font-size:12px;font-weight:800;color:#fff;min-width:44px;text-align:center;">點擊</div>
-              <div style="font-size:12px;color:#6D4C41;">私領域 → <strong>銷售</strong></div>
-            </div>
-          </div>
-          <div style="margin-top:10px;font-size:11.5px;color:#A1887F;font-style:italic;">易 ↑ 到 ↓ 難</div>
-        </div>
-      </div>
-
-      <!-- 最容易增粉的命名 -->
-      <div class="detail-section">
-        <div class="detail-section-title">婕樂纖最容易增粉的命名</div>
-        <div class="brand-pillar" style="margin-bottom:12px;">
-          <div class="brand-pillar-head">📝 好名字的共同點</div>
-          <div class="brand-pillar-body">1. 暱稱　2. 關鍵字：地點、興趣類別、服務項目
-
-· 好的姓名舉例：
-# XX的餐桌｜食譜分享｜懶人烘焙｜減脂料理
-# XX愛開箱｜711美食｜全家甜點｜全聯必買
-# XX小姐｜美容、美睫、美甲探店
-# 中壢XX私人日記：居家運動｜健身操</div>
-        </div>
-        <div class="upgrade-tip-card">
-          <div class="upgrade-tip-body">❌ 姓名不要放微商、創業、直銷、斜槓、減肥、瘦身
-❌ 不要給英文名字＋中文名字
-❌ 不要放兩個暱稱，選一個就好
-❌ 不要放「我是XX媽」
-
-上面的關鍵字會讓人起戒心，尤其減肥、瘦身是大忌。社群規範有說，他們不會推廣會製造外貌焦慮的內容！
-內容可以有，但不要用命名去嚇跑觀眾。</div>
-        </div>
-      </div>
-
-    </div>`;
-    return;
-  }
-
-  if (key === 'mindset') {
-    body.innerHTML = `<div style="padding:14px 16px 32px;">
-      <div class="detail-section">
-        <div class="detail-section-title">破除錯誤想像</div>
-        <div class="brand-pillar">
-          <div class="brand-pillar-head">💡 重點在於持續、堅持</div>
-          <div class="brand-pillar-body">不要完美主義，不完美才有討論空間
-不要以為做一部短影音就會破百萬流量
-不要以為做一部爆款影片就會增粉
-不要以為只有一部爆款，限動就會很多人看
-
-<strong>市場不會飽和，只會重新分配。</strong></div>
-        </div>
-      </div>
-
-      <!-- 粉絲養成三階段 -->
-      <div class="detail-section">
-        <div class="detail-section-title">粉絲養成三階段</div>
-        <div class="upgrade-steps" style="margin-bottom:12px;">
-          <div class="upgrade-step">
-            <div class="upgrade-num" style="font-size:13px;font-weight:800;color:#A1887F;min-width:48px;">階段一</div>
-            <div class="upgrade-text">未成為粉絲 → 最不信任，不會買</div>
-          </div>
-          <div class="upgrade-step">
-            <div class="upgrade-num" style="font-size:13px;font-weight:800;color:#8D6E63;min-width:48px;">階段二</div>
-            <div class="upgrade-text">剛成為粉絲 → 還在觀望、建立信任</div>
-          </div>
-          <div class="upgrade-step">
-            <div class="upgrade-num" style="font-size:13px;font-weight:800;color:#6D4C41;min-width:48px;">階段三</div>
-            <div class="upgrade-text">成為鐵粉 → 完全信任，推什麼都買</div>
-          </div>
-        </div>
-        <div class="brand-pillar">
-          <div class="brand-pillar-head">🔍 破解迷思</div>
-          <div class="brand-pillar-body">為什麼增粉了，限動的點開卻沒有增加？
-因為剛成為粉絲的人，還在培養對你的信任，不一定會無條件點開你的限動。
-再加上點開後可能會看到你的生活瑣事，原本是因為資訊而追蹤你的，久而久之就會失去點開的動力，又回到階段一。
-
-而且在培養信任的階段裡，就算點開限時動態看你，也不夠信任你，就不會買你推薦的商品。</div>
-        </div>
-      </div>
-
-      <!-- 如何培養信任 -->
-      <div class="detail-section">
-        <div class="detail-section-title">如何培養信任</div>
-        <div class="brand-pillar">
-          <div class="brand-pillar-head">🎯 讓粉絲升級成鐵粉</div>
-          <div class="brand-pillar-body">你得「對世界有觀點」，讓他們「同頻共振」，未來才有機會成為鐵粉。
-
-做法：用時事或生活中遇到的困難去表達價值觀
-例如：婆媳衝突、夫妻爭執、孩子不聽話、社會事件、熱門新聞、流行話題
-→ 讓觀眾覺得：「你講出我心裡想說的話。」</div>
-        </div>
-        <div class="upgrade-tip-card">
-          <div class="upgrade-tip-body">別只讓人知道你在賣什麼，要讓人知道你是什麼樣的人。</div>
-        </div>
-      </div>
-
-      <!-- 自媒體忠誠原則 -->
-      <div class="detail-section">
-        <div class="detail-section-title">自媒體的忠誠原則</div>
-        <div class="brand-pillar">
-          <div class="brand-pillar-head">💌 做自媒體就像跟演算法談戀愛</div>
-          <div class="brand-pillar-body">貼文、Reels 是你給陌生人的第一印象，請保持專情，主題不能亂槓。
-
-換主題 = 變心 = 要看溝通頻率
-一天一通電話 VS 一個月一通電話。
-你先試15篇/月，發現不適合再變心，但別一開始就劈腿。
-
-貼文 / Reels → 給陌生人看 → 要主題專一
-限動 → 給熟人看 → 可以海起來，情緒自由發揮
-
-主頁要專情，限動才花心。
-不懂這一點，只會讓演算法和觀眾都滑掉你。</div>
-        </div>
-      </div>
-
-      <!-- 經營自媒體階段 -->
-      <div class="detail-section">
-        <div class="detail-section-title">你在自媒體的什麼階段？</div>
-        <div class="brand-block">
-          <div class="brand-block-title">📊 依粉絲人數判斷</div>
-          <div class="brand-win-grid" style="grid-template-columns:1fr;">
-            <div class="brand-win-item"><span class="brand-win-num" style="color:#C8A882;min-width:80px;">剛開始 1–99</span>定位、自我介紹、15則貼文</div>
-            <div class="brand-win-item"><span class="brand-win-num" style="color:#A1887F;min-width:80px;">探索期 100–999</span>修正定位、分析主題、私訊互動</div>
-            <div class="brand-win-item"><span class="brand-win-num" style="color:#8D6E63;min-width:80px;">成長期 1000–2999</span>大量產出貼文、提升貼文互動率</div>
-            <div class="brand-win-item"><span class="brand-win-num" style="color:#6D4C41;min-width:80px;">爆發期 3000+</span>情緒價值、找出願意付費的粉絲，持續觀察貼文數據、多方合作</div>
-          </div>
-        </div>
-        <div class="upgrade-tip-card" style="margin-top:10px;">
-          <div class="upgrade-tip-body">🎯 初期目標：10,000 人
-・3000人以內 → 先找流量密碼、努力增粉
-・3000人以後 → 穩定更新、增加互動變現</div>
-        </div>
-      </div>
-
-      <!-- 爆款選題技巧 -->
-      <div class="detail-section">
-        <div class="detail-section-title">爆款影片選題技巧</div>
-        <div class="brand-pillar">
-          <div class="brand-pillar-head">🎬 你想要拍出40–60萬的影片</div>
-          <div class="brand-pillar-body">選題技巧：
-1. 開口要大
-2. 主題要一致
-3. 金錢的資訊落差
-
-被看見的機會多了，觀眾才會留下來。
-用廣度被看見、用深度經營粉絲。
-
-當被社群平台貼上標籤後，就要往那個主題系列去深度經營。</div>
-        </div>
-      </div>
-
-      <!-- 不敢露臉 -->
-      <div class="detail-section">
-        <div class="detail-section-title">不敢露臉可以做爆款嗎？</div>
-        <div class="brand-pillar">
-          <div class="brand-pillar-head">要不要露臉，取決於三個層面</div>
-          <div class="brand-pillar-body"><strong>1. 心態　2. 信賴度　3. 價錢</strong>
-
-不露臉的心態多半是：
-・擔心個人私隱問題
-・害怕面對到鏡頭
-・不想在現實世界被批評
-
-因為你又不是蔡依林，也不是周杰倫，大家根本不是為了看你長相而來。觀眾注重的是能不能從影片獲得價值，是來解決問題、獲得靈感、找到認同感的。
-
-賣十塊的產品不需要露臉，因為便宜，信任度不需要太高。
-賣一萬塊的產品/服務，受眾會要求的比較多，露臉就是一個提升信賴度的辦法。</div>
-        </div>
-        <div class="brand-block" style="margin-top:10px;">
-          <div class="brand-block-title">不露臉時需要更多素材</div>
-          <div class="brand-win-grid">
-            <div class="brand-win-item">資訊圖表、新聞畫面</div>
-            <div class="brand-win-item">生活場景片段：風景、寵物、街道</div>
-            <div class="brand-win-item">個人局部特寫：手部、鞋子、背影</div>
-            <div class="brand-win-item">每個片段約3-5秒，才可以把影片拼湊起來</div>
-          </div>
-        </div>
-      </div>
-
-    </div>`;
-    return;
-  }
-
-  body.innerHTML = `<div style="padding:14px 16px 32px;">
-    <div class="coming-soon" style="padding:40px 20px;">
-      <div class="coming-soon-icon">✨</div>
-      <div class="coming-soon-text">${card.label}的內容即將上線，敬請期待！</div>
-    </div>
-  </div>`;
-}
-
-function closeTrafficOverlay() {
-  document.getElementById('trafficDetailOverlay').classList.remove('open');
 }
 
 if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js').catch(()=>{}); }
